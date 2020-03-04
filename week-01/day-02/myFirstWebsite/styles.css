@@ -1,0 +1,88 @@
+/*background-image */
+body {background-image: url('assets/background.png');
+    margin:0px}
+
+
+/* navigation header */
+.navigation {
+  background-color: #333333;
+  overflow: hidden;
+}
+#logo {
+  float: left;
+  margin-left: 140px;
+  /*vertical-align: top;*/
+  width: 35px;
+  height: 35px;
+  margin-top: 6px;}
+/* Style the links inside the navigation bar */
+.navigation a {
+  float: right;
+  color: #ff0099;
+  text-align: center;
+  padding: 14px 25px;
+  text-decoration: underline;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.navigation #nav-links {margin-right: 150px;}
+
+/* logo */
+
+
+/*text in the body until definitions */
+.text {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10%;
+  width: 80%;
+  padding-top: 50px;
+}
+p {font-family: "Consolas", "Courier";}
+
+#my-name {
+  font-family: 'Caladea';
+  font-size: 40px;
+  text-align: left;
+  padding-top: 0px;
+}
+/*.text p {
+  font-family: 'Consolas', Courier, monospace;*/
+
+/*
+#my-name {
+  margin-left: auto;
+}
+*/
+
+#profession {font-family: 'Caladea';
+  color: #ff0099 !important;}
+
+/*spacer */
+#spacer {text-align: center;}
+
+
+/*definitions */
+#definitions h2 {text-align: center;
+  font-family: 'Caladea';
+  font-size: 30px;}
+
+#definitions dt {
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: 'Caladea'
+  
+
+}
+#definitions dd {
+    margin-left: auto;
+    font-family: "Consolas", "Courier", "Monospace";}
+  
+
+  
+
+
