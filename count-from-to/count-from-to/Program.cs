@@ -19,29 +19,47 @@ namespace count_from_to
             // 3
             // 4
             // 5
+            bool isNumber;
+            int num1;
+            int num2;
 
-            Console.WriteLine("Please enter the first number: ");
-            bool isNumber = Int32.TryParse(Console.ReadLine(), out int num1);
 
-            while (true)
+            // first input
+
+            do
             {
+                Console.WriteLine("Please enter the first number: ");
+                isNumber = Int32.TryParse(Console.ReadLine(), out num1);
+
                 if (!isNumber)
                 {
                     Console.WriteLine("numbers only");
-                    return;
-
                 }
+                else
+                    isNumber = true;
 
+            }
+            while (!isNumber);
 
+            // second input
+
+            do
+            {
                 Console.WriteLine("Please enter the second number: ");
-                isNumber = Int32.TryParse(Console.ReadLine(), out int num2);
+                isNumber = Int32.TryParse(Console.ReadLine(), out num2);
+
                 if (!isNumber)
                 {
                     Console.WriteLine("numbers only");
-                    return;
                 }
+                else
+                    isNumber = true;
 
-                if (num1 >= num2)
+            }
+            while (!isNumber);
+
+
+            if (num1 >= num2)
                 {
                     Console.WriteLine("The second number should be bigger");
                 }
@@ -53,7 +71,7 @@ namespace count_from_to
                     }
 
                 } 
-            }
+            
 
 
 
