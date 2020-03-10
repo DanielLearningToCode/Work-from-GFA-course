@@ -16,18 +16,16 @@ namespace PersonalFinance
             /*Create an application which solves the following problems.
             // How much did we spend? */
             // spendingsList.Sum();  // lazy method
-            
-            
+
             int sum = 0;
             int greatestExpense = 0;
-            int cheapestSpening = 0;
+            int cheapestSpening = spendingsList[0]; ;
             int average = 0;
-            int expense = spendingsList[0];
-            cheapestSpening = spendingsList[0];
 
             for (int i = 0; i < spendingsList.Count; i ++)
             {
                 sum += spendingsList[i];
+                
                 // finding the most expensive one 
                 if (spendingsList[i] > greatestExpense)
                 {
