@@ -28,7 +28,7 @@ namespace write_multiple_lines
                 }
                 writer.Dispose();
             }
-            catch (IOException)
+            catch (Exception)
             {
                 Console.WriteLine("an error occured");
             }
