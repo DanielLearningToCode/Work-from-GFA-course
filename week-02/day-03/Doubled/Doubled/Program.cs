@@ -9,17 +9,18 @@ namespace Doubled
         static void Main(string[] args)
         {
             // Create a method that decrypts the duplicated-chars.txt 
-            string text = File.ReadAllText("TextFile1.txt");
-            text = text.Replace("\r", "\n");
-            char[] arrayOfChars = text.ToCharArray();
+            string text = File.ReadAllText("file.txt");
+
+            text = text.Replace('\r', '\n');
+
             string decodedText = "";
 
-            for (int i = 0; i < arrayOfChars.Length; i += 2)
+            for (int i = 0; i < text.Length; i += 2)
             {
-                decodedText += arrayOfChars[i];
+                decodedText += text[i];
             }
-            Console.Write(decodedText);
-            Console.WriteLine();
+
+            Console.WriteLine(decodedText);
 
             /*// alternative - removes all double letters, including the correct ones 
 
