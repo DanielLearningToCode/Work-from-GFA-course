@@ -1,9 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using DrawingApplication;
 
-namespace AvaloniaApplication1
+namespace CenterBoxFunction
 {
     public class App : Application
     {

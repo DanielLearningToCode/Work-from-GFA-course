@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApplication2", "AvaloniaApplication2\AvaloniaApplication2.csproj", "{3A474A0D-00F1-4D35-8882-C725D48219FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CenterBoxFunction", "CenterBoxFunction\CenterBoxFunction.csproj", "{E468B5DC-28AA-4ECD-966A-1521EB99A367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3A474A0D-00F1-4D35-8882-C725D48219FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A474A0D-00F1-4D35-8882-C725D48219FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A474A0D-00F1-4D35-8882-C725D48219FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A474A0D-00F1-4D35-8882-C725D48219FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E468B5DC-28AA-4ECD-966A-1521EB99A367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E468B5DC-28AA-4ECD-966A-1521EB99A367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E468B5DC-28AA-4ECD-966A-1521EB99A367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E468B5DC-28AA-4ECD-966A-1521EB99A367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5E46A986-EADD-407B-86E4-B67D313D021F}
+		SolutionGuid = {34C2B5F5-16A5-4870-83F4-588573509B26}
 	EndGlobalSection
 EndGlobal
