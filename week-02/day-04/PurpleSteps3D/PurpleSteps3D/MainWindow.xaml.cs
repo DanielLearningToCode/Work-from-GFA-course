@@ -19,14 +19,12 @@ namespace PurpleSteps3D
             ////
             int size = 10;
             int offset = 10;
-            int multiplier = 0;
             int increment = 0;
             foxDraw.SetFillColor(Colors.Purple);
             for (int i = 1; i < 10; i++)
             {
                 foxDraw.DrawRectangle(offset,offset ,size*i, size*i);
-                multiplier++;
-                increment = multiplier * 10;
+                increment = i * size;
                 offset += increment; 
             }
 #endif
