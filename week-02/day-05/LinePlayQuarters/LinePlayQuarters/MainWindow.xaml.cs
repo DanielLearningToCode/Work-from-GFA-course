@@ -23,13 +23,9 @@ namespace LinePlayQuarters
             {
                 for (int i = 0; i < 16; i++)  // shifting on a line line
                 {
-
                     shape(Convert.ToInt32(shiftRight) * i, Convert.ToInt32(shiftDown) * j, foxDraw);
-
                 }
-
             }
-           
 #endif
         }
 
@@ -42,14 +38,12 @@ namespace LinePlayQuarters
             var left = 0 + shiftOfxCoordinates;
             var right = fraction + shiftOfxCoordinates;
 
-            foxDraw.SetStrokeColor(Colors.Orchid);
+            
             for (int i = 0; i < 15; i++)
             {
+                foxDraw.SetStrokeColor(Colors.Orchid);
                 foxDraw.DrawLine(left + shift * i , top, right, top + shift * i);
-            }
-            foxDraw.SetStrokeColor(Colors.Lime);
-            for (int i = 0; i < 15; i++)
-            {
+                foxDraw.SetStrokeColor(Colors.Lime);
                 foxDraw.DrawLine(left, top + shift * i, left + shift * i, bottom);
             }
         }
