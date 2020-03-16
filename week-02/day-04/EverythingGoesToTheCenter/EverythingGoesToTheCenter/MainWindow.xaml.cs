@@ -31,29 +31,16 @@ namespace EverythingGoesToTheCenter
             double numOfLinesPerSide = canvasSide / shift;
 
             for (int i = 0; i < numOfLinesPerSide; i++)
-            {
-                Line(x + shift * i, y, foxDraw);
+            {D
+                DrawLine(x + shift * i, y, foxDraw);
+                DrawLine(Width, y + shift * i, foxDraw);
+                DrawLine(x + shift * i, Height, foxDraw);
+                DrawLine(x, y + shift * i, foxDraw);
             }
-
-            for (int i = 0; i < numOfLinesPerSide; i++) 
-            {
-                Line(Width, y + shift * i, foxDraw);
-            }
-
-            for (int i = 0; i < numOfLinesPerSide; i++)
-            {
-                Line(x + shift * i, Height, foxDraw);
-            }
-
-            for (int i = 0; i < numOfLinesPerSide; i++)
-            {
-                Line(x, y + shift * i, foxDraw);
-            }
-
 #endif
         }
 
-        private void Line(double x, double y, FoxDraw foxDraw)
+        private void DrawLine(double x, double y, FoxDraw foxDraw)
         {
             double xCenter = Width / 2;
             double yCenter = Height / 2;
