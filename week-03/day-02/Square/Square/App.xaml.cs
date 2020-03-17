@@ -2,7 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace Squares_factorial
+namespace Square
 {
     public class App : Application
     {

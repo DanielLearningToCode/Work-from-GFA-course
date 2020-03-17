@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Logging.Serilog;
 
-namespace Squares_factorial
+namespace Square
 {
     class Program
     {
