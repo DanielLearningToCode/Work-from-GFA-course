@@ -15,17 +15,11 @@ namespace Domino
             //  [1,5][5,2][2,4][4,6][6,7][7,1]  ???
             // Console.WriteLine(dominoes[1].GetValues()[1]);
 
-            Console.WriteLine(SortDominoes(dominoes));
-
-            //Console.WriteLine(GetFirstOne(dominoes).GetValues()[0]);
-
-
-            foreach (var item in SortDominoes(dominoes))
-            {
-                Console.WriteLine(item);
-                //Console.WriteLine(item.GetValues()[1]);
-            }
-
+            Console.Write("Unsorted domino: ");
+            PrintDominoes(dominoes);
+            Console.WriteLine();
+            Console.Write("Sorted domino: ");
+            PrintDominoes(SortDominoes(dominoes));
         }
 
         public static List<Domino> InitializeDominoes()
@@ -69,5 +63,13 @@ namespace Domino
 
             return sortedList;
         }
+        public static void PrintDominoes(List<Domino> dominoes)
+        {
+            foreach (var item in dominoes)
+            {
+                Console.Write($"[{item.GetValues()[0]},{item.GetValues()[1]}]");
+            }
+        }
+
     }
 }
