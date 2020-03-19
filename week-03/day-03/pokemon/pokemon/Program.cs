@@ -17,6 +17,8 @@ namespace GreenFoxAcademy
 
             Pokemon wildPokemon = new Pokemon("Oddish", PokemonType.Leaf, PokemonType.Water);
 
+            Console.WriteLine(pokemonOfAsh[1].Name); 
+
             // Which pokemon should Ash use?
             Pokemon myPokemon = null;
             foreach (var pokemon in pokemonOfAsh)
