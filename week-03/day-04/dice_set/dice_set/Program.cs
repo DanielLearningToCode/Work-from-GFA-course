@@ -15,41 +15,41 @@ namespace GreenFoxAcademy
             DiceSet diceSet = new DiceSet();
             diceSet.Roll();
             // version 1
-            /*            bool allSix = false;
-                        bool isSix = false;
-                        int counter = 0;
-                        while (!allSix)
-                        {
-                            for (int i = 0; i < diceSet.GetCurrent().Length; i++)
-                            {
-                                if (diceSet.GetCurrent(i) != 6)
-                                {
-                                    isSix = false;
-                                    break;
-                                }
-                                else
-                                {
-                                    isSix = true;
-                                }   
-                            }
-                            if (isSix)
-                            {
-                                allSix = true;
-                                break;
-                            }
-                            counter++;
-                            Array.ForEach(diceSet.GetCurrent(), Console.Write);
-                            diceSet.Reroll();
-                        }
-                        if (isSix)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine($"We needed {counter} trials");
-                            Console.WriteLine("All die are six");
-                            Array.ForEach(diceSet.GetCurrent(), Console.Write);
-                        }*/
+            bool allSix = false;
+            bool isSix = false;
+            int counter = 0;
+            while (!allSix)
+            {
+                for (int i = 0; i < diceSet.GetCurrent().Length; i++)
+                {
+                    if (diceSet.GetCurrent(i) != 6)
+                    {
+                        isSix = false;
+                        break;
+                    }
+                    else
+                    {
+                        isSix = true;
+                    }
+                }
+                if (isSix)
+                {
+                    allSix = true;
+                    break;
+                }
+                counter++;
+                Array.ForEach(diceSet.GetCurrent(), Console.Write);
+                diceSet.Reroll();
+            }
+            if (isSix)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"We needed {counter} trials");
+                Console.WriteLine("All die are six");
+                Array.ForEach(diceSet.GetCurrent(), Console.Write);
+            }
 
-            // version 2
+            /*// version 2
             int counter2 = 0;
             for (int dice = 0; dice < diceSet.GetCurrent().Length; dice++)
             {
@@ -60,7 +60,7 @@ namespace GreenFoxAcademy
                 }
             }
             Array.ForEach(diceSet.GetCurrent(), Console.WriteLine);
-            Console.WriteLine(counter2);
+            Console.WriteLine(counter2);*/
 
         }
     }
