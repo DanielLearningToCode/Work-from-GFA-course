@@ -58,9 +58,7 @@ namespace Domino
                         sortedList.Add(dominoes[i]);
                     }
                 }
-
             }
-
             return sortedList;
         }
         public static void PrintDominoes(List<Domino> dominoes)
