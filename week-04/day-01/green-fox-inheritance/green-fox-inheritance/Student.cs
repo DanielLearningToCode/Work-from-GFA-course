@@ -9,11 +9,8 @@ namespace green_fox_inheritance
         private string previousOrganization;
         private int skippedDays;
 
-        public Student(string name, int age, GenderTypes gender, string previousOrganization) //: base(string name, int age, GenderTypes gender) ??? 
+        public Student(string name, int age, GenderTypes gender, string previousOrganization) : base (name, age, gender)
         {
-            this.name = name;
-            this.age = age;
-            this.gender = gender;
             this.previousOrganization = previousOrganization;
             skippedDays = 0;
         }

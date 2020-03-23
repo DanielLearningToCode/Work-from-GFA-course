@@ -9,11 +9,8 @@ namespace green_fox_inheritance
         public enum LevelType { junior, intermediate, senior }
         private LevelType level;
 
-        public Mentor(string name, int age, GenderTypes gender, LevelType level)
+        public Mentor(string name, int age, GenderTypes gender, LevelType level) : base(name, age, gender)
         {
-            this.name = name;
-            this.age = age;
-            this.gender = gender;
             this.level = level;
         }
         public Mentor()

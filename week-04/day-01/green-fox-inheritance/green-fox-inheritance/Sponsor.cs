@@ -9,11 +9,8 @@ namespace green_fox_inheritance
         private string company;
         private int hiredStudents;
 
-        public Sponsor(string name, int age, GenderTypes gender, string company)
+        public Sponsor(string name, int age, GenderTypes gender, string company) : base(name, age, gender)
         {
-            this.name = name;
-            this.age = age;
-            this.gender = gender;
             this.company = company;
             hiredStudents = 0;
         }

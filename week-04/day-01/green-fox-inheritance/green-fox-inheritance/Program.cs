@@ -8,7 +8,6 @@ namespace green_fox_inheritance
         static void Main(string[] args)
         {
             var people = new List<Person>();
-
             var mark = new Person("Mark", 46, Person.GenderTypes.male);
             people.Add(mark);
             var jane = new Person();
