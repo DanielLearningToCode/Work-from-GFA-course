@@ -23,21 +23,24 @@ namespace reservations
             CreateDowBooking();
             CreateCodeBooking();
         }
-        private void CreateDowBooking()
+        private static int RandNum(int min, int max)
         {
             Random rnd = new Random();
-            int randDay = rnd.Next(0, 7);
+            return rnd.Next(min, max);
+        }
+        private void CreateDowBooking()
+        {
+            int randDay = RandNum(0, 7);
             Days day = (Days)randDay;
             this.dow = day.ToString();
         }
-        
+
         private void CreateCodeBooking()
         {
             string bookingCode = "";
-            Random rnd = new Random();
             for (int i = 0; i < 8; i++)
             {
-                int randCharASCII = rnd.Next(1, 3) == 1 ? rnd.Next(48, 58) : rnd.Next(65, 91);
+                int randCharASCII = RandNum(0, 2) == 1 ? RandNum(48, 58) : RandNum(65, 91);
                 char character = (char)randCharASCII;
                 bookingCode += character;
             }

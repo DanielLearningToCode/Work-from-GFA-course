@@ -14,7 +14,8 @@ namespace unique
                 Console.Write(num + ", ");
             }
         }
-        //version 1
+        //version 1, using list and array.Contains()
+
         /*public static int[] GetUniqueOnes(int[] numArray)
         {
             List<int> tempList = new List<int>();
@@ -28,11 +29,11 @@ namespace unique
             }
             return tempList.ToArray();
         }*/
+        // second version - using basic stuff only, no lists and methods.
         public static int[] GetUniqueOnes(int[] numArray)
         {
             int[] tempArray = new int[numArray.Length];
             int tempArrayIndex = 0;
-            int shorterBy = 0;
             for (int i = 0; i < numArray.Length; i++)
             {
                 int currentNum = numArray[i];
@@ -50,7 +51,6 @@ namespace unique
                     tempArray[tempArrayIndex] = currentNum;
                     tempArrayIndex++;
                 }
-                
             }
             int[] result = new int[tempArrayIndex];
             for (int k = 0; k < result.Length; k++)
