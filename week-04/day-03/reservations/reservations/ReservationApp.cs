@@ -6,8 +6,8 @@ namespace reservations
     {
         static void Main(string[] args)
         {
-            Reservation reservationSys = new Reservation();
-            Console.WriteLine($"Booking# {reservationSys.GetCodeBooking()} for {reservationSys.GetDowBooking()}");
+            Reservation reservation = new Reservation();
+            Console.WriteLine($"Booking# {reservation.GetCodeBooking()} for {reservation.GetDowBooking()}");
         }
     }
 }

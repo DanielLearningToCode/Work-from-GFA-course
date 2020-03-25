@@ -16,14 +16,22 @@ namespace reservations
     }
     class Reservation : IReservation
     {
-        public string GetDowBooking()
+        private string dow;
+        private string code;
+        public Reservation()
+        {
+            CreateDowBooking();
+            CreateCodeBooking();
+        }
+        private void CreateDowBooking()
         {
             Random rnd = new Random();
             int randDay = rnd.Next(0, 7);
             Days day = (Days)randDay;
-            return day.ToString();
+            dow = day.ToString();
         }
-        public string GetCodeBooking()
+        
+        private void CreateCodeBooking()
         {
             string bookingCode = "";
             Random rnd = new Random();
@@ -33,7 +41,15 @@ namespace reservations
                 char character = (char)randChar;
                 bookingCode += character;
             }
-            return bookingCode;
+            code = bookingCode;
+        }
+        public string GetCodeBooking()
+        {
+            return code;
+        }
+        public string GetDowBooking()
+        {
+            return dow;
         }
 
     }
