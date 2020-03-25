@@ -7,10 +7,8 @@ namespace zoo
         static void Main(string[] args)
         {
             Crocodile dundee = new Crocodile("Dundee", Animal.gendertypes.male);
-            HummingBird chirp = new Animal ("Chirp", Animal.gendertypes.female);
+            HummingBird chirp = new HummingBird ("Chirp", Animal.gendertypes.female);
             Koala eucalyptAddict = new Koala("EucalyptAddict", Animal.gendertypes.female);
-
-            
 
             Console.WriteLine(dundee.GetName() + ", " + dundee.GetGender().ToString() + " " + dundee.WantChild());
             Console.WriteLine(chirp.GetName() + ", " + chirp.WantChild());
