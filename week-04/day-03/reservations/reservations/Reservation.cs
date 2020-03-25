@@ -28,7 +28,7 @@ namespace reservations
             Random rnd = new Random();
             int randDay = rnd.Next(0, 7);
             Days day = (Days)randDay;
-            dow = day.ToString();
+            this.dow = day.ToString();
         }
         
         private void CreateCodeBooking()
@@ -37,11 +37,11 @@ namespace reservations
             Random rnd = new Random();
             for (int i = 0; i < 8; i++)
             {
-                int randChar = rnd.Next(1, 3) == 1 ? rnd.Next(48, 58) : rnd.Next(65, 91);
-                char character = (char)randChar;
+                int randCharASCII = rnd.Next(1, 3) == 1 ? rnd.Next(48, 58) : rnd.Next(65, 91);
+                char character = (char)randCharASCII;
                 bookingCode += character;
             }
-            code = bookingCode;
+            this.code = bookingCode;
         }
         public string GetCodeBooking()
         {
