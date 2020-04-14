@@ -76,9 +76,9 @@ namespace Triangles
 
             level--;
             foxDraw.SetFillColor(RandomColor());
-            DrawTriangle(x, y, size * 0.5, level, foxDraw);
+           // DrawTriangle(x, y, size * 0.5, level, foxDraw);
             foxDraw.SetFillColor(RandomColor());
-            DrawTriangle(x + halfOfSide, y, size * 0.5, level, foxDraw);
+//DrawTriangle(x + halfOfSide, y, size * 0.5, level, foxDraw);
             foxDraw.SetFillColor(RandomColor());
             DrawTriangle(x + halfOfSide * 0.5, y + heightUpTriangle, size * 0.5 , level, foxDraw);
         }
