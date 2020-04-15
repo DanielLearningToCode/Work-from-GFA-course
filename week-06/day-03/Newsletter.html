@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <title>Newsletter</title>
+    <link rel='stylesheet' href='styles.css'/>
+  </head>
+  <body>
+    <header>
+      <h1>Newsletter</h1>
+    </header>
+    <form action="https://newsletter-ws.herokuapp.com/signup"
+          method="POST" >
+        <label for="name">Name</label><br>
+        <input id="name" name="name" type="text" required><br>
+        <label>Email</label><br>
+        <input id="email" name="email" type="email" required><br>
+        <input type="submit" value="send">
+    </form>
+  </body>
+</html>
