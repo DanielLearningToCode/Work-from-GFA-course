@@ -1,0 +1,32 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 10px auto;
+    border: 1px solid white;
+    border-radius: 8px;
+    box-shadow: 0 0 5px;
+}
+.buttons {
+    display: flex;
+    list-style: none;
+}
+.buttons button {
+        background-color: rgb(255, 56, 56);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 4px;
+        outline: none;
+        text-transform: uppercase;
+        height: 35px;
+        margin-right: 20px;
+}
