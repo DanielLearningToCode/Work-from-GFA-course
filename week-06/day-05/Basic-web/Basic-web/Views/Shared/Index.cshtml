@@ -13,44 +13,47 @@
     <link rel="stylesheet" href="~/StyleSheet.css" />
 </head>
 <body>
-    <header>
-        <form>
-            <ul class="buttons">
-                <li><button type="submit" formmethod="get" formaction="~/home/Available">Only available</button></li>
-                <li><button type="submit" formmethod="get" formaction="~/home/Cheapest">Cheapest first</button></li>
-                <li><button type="submit" formmethod="get" formaction="~/home/Nike">Contains Nike</button></li>
-                <li><button type="submit" formmethod="get" formaction="~/home/Average">Average</button></li>
-                <li><button type="submit" formmethod="get" formaction="~/home/Expensive">Most exepnsive available</button></li>
-            </ul>
-        </form>
-    </header>
-    <main>
-        @if (Model != null)
-        {
-            <table>
-                <thead class="table-header">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quantity of stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ShopItem item in Model)
-                    {
+    <div class="inside-body">
+        <header>
+            <h1>My shop</h1>
+            <form>
+                <ul class="buttons">
+                    <li><button type="submit" formmethod="get" formaction="~/home/Available">Only available</button></li>
+                    <li><button type="submit" formmethod="get" formaction="~/home/Cheapest">Cheapest first</button></li>
+                    <li><button type="submit" formmethod="get" formaction="~/home/Nike">Contains Nike</button></li>
+                    <li><button type="submit" formmethod="get" formaction="~/home/Average">Average stock</button></li>
+                    <li><button type="submit" formmethod="get" formaction="~/home/Expensive">Most exepnsive available</button></li>
+                </ul>
+            </form>
+        </header>
+        <main>
+            @if (Model != null)
+            {
+                <table>
+                    <thead class="table-header">
                         <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td>@item.Price.ToString("C1", System.Globalization.CultureInfo.CurrentCulture)</td>
-                            <td>@item.QuantityOfStock</td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Quantity of stock</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        <br />
-        <p>Average stock: @ViewBag.Average</p>
-    </main>
+                    </thead>
+                    <tbody class="rows">
+                        @foreach (ShopItem item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Price.ToString("C1", System.Globalization.CultureInfo.CurrentCulture)</td>
+                                <td>@item.QuantityOfStock</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <br />
+            <p>Average stock: @ViewBag.Average</p>
+        </main>
+    </div>
 </body>
 </html>
