@@ -1,0 +1,47 @@
+﻿@using Bank_of_Simba.Models;
+@model List<BankAccount>
+@{int index = 0; }
+@{ string color = "";}
+@{ string gold = "#D4AF37";}
+@{ string white = "FFFFFF";}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    @if (Model != null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Account holder name</th>
+                    <th>Account balance</th>
+                    <th>Animal type</th>
+                    <th>Is king</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var account in Model)
+                {
+                    index++;
+                    color = account.King ? gold : white;
+                    <tr style="background-color:@color">
+                        <th>@index</th>
+                        <th>@account.Name</th>
+                        <th>@account.Balance.ToString("F2") Zebra</th>
+                        <th>@account.AnimalType</th>
+                        <th>@account.King</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Welcome to our bank</p>
+    }
+</body>
+</html>
+<h1>Index</h1>
