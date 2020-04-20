@@ -4,13 +4,15 @@
 @{ string color = "";}
 @{ string gold = "#D4AF37";}
 @{ string white = "FFFFFF";}
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <title>Modify or create an account</title>
 </head>
 <body>
     @if (Model != null)
     {
+
         <table>
             <thead>
                 <tr>
@@ -19,6 +21,8 @@
                     <th>Account balance</th>
                     <th>Animal type</th>
                     <th>Is king</th>
+                    <th>Bad Guy</th>
+                    <th>Modify</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,20 +32,40 @@
                     index++;
                     color = account.King ? gold : white;
                     <tr style="background-color:@color">
-                        <th>@index</th>
-                        <th>@account.Name</th>
-                        <th>@account.Balance.ToString("F2") Zebra</th>
-                        <th>@account.AnimalType</th>
-                        <th>@account.King</th>
+                        <td>@index</td>
+                        <td>@account.Name</td>
+                        <td>@account.Balance.ToString("0.00 Zebras") </td>
+                        <td>@account.AnimalType</td>
+                        <td>@account.King</td>
+                        <td>@account.Character</td>
+                        @using (Html.BeginForm("ModifyAccounts", "home", FormMethod.Post))
+                        {
+                            <td><input type="hidden" name="account" value="@(index-1)" /></td>
+                            <td><input type="submit" value="increase balance" /></td>
+                        }
                     </tr>
                 }
+                @using (Html.BeginForm("CreateAccount", "home", FormMethod.Post))
+                {
+                    index++;
+                    <tr>
+                        <td>@index</td>
+                        <td><input type="text" name="name" placeholder="name" /></td>
+                        <td><input type="text" name="balance" value="0" placeholder="balance" /></td>
+                        <td><input type="text" name="animalType" placeholder="type of animal" /></td>
+                        <td><input type="text" name="isKing" placeholder="is king? y/n" /></td>
+                        <td><input type="text" name="isBadGuy" placeholder="is bad guy? y/n" /></td>
+                        <td><input type="submit" value="create new customer account" /></td>
+                    </tr>
+                }
+
             </tbody>
         </table>
     }
+
     else
     {
         <p>Welcome to our bank</p>
     }
 </body>
 </html>
-<h1>Index</h1>

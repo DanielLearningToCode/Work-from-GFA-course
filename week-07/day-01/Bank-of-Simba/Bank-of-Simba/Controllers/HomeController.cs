@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bank_of_Simba.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
-
 namespace Bank_of_Simba.Controllers
-{   //[Route("Home")]
+{   [Route("Home")]
     public class HomeController : Controller
     {
         public static List<BankAccount> accountList = null;
@@ -15,40 +15,66 @@ namespace Bank_of_Simba.Controllers
         {
             accountList = new List<BankAccount>()
             {
-                new BankAccount("Zazu", 500, "bird", false),
-                new BankAccount("Scar", 10000, "lion", false),
-                new BankAccount("Timon", 800, "meerkat", false),
-                new BankAccount("Rafiky", 5000, "baboon", false),
-                new BankAccount("Simba", 2000, "lion", true),
+                new BankAccount("Zazu", 500, "bird", false, Characters.Good_guy),
+                new BankAccount("Scar", 10000, "lion", false, Characters.Bad_guy),
+                new BankAccount("Timon", 800, "meerkat", false, Characters.Good_guy),
+                new BankAccount("Rafiky", 5000, "baboon", false, Characters.Good_guy),
+                new BankAccount("Simba", 2000, "lion", true, Characters.Good_guy),
             };
         }
         public HomeController()
         {
-            if (accountList ==null)
+            if (accountList == null)
             {
                 InitializeList();
             }
         }
-
+        [HttpGet("index")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet("show")]
         public IActionResult Show()
         {
-            return View("index" );
+            return View("index");
         }
-
+        [HttpGet("html")]
         public IActionResult Html()
         {
             string message = "This is an<em> HTML </ em > text. < b > Enjoy yourself! </ b > ";
             ViewBag.Message = message;
             return View("index");
         }
+        [HttpGet("all")]
         public IActionResult ListAllAccounts()
         {
             return View(accountList);
+        }
+        [HttpPost("ModifyAccounts")]
+        public IActionResult ModifyAccounts(int account)
+        {
+            if (accountList[account].King)
+            {
+                accountList[account].Balance += 100;
+            }
+            else
+            {
+                accountList[account].Balance += 10;
+            }
+            return RedirectToAction("ListAllAccounts");
+        }
+        [HttpPost ("CreateAccount")]
+        public IActionResult CreateAccount(string name, decimal balance, string animalType, string isKing, string isBadGuy)
+        {
+            if (name!=null && animalType !=null && isKing != null && isBadGuy != null)
+            {
+                bool king = isKing == "y" ? true : false;
+                Characters character = isBadGuy == "y" ? Characters.Bad_guy : Characters.Good_guy;
+                BankAccount newAccount = new BankAccount() { Name = name, Balance = balance, AnimalType = animalType, King = king, Character = character };
+                accountList.Add(newAccount);
+            }
+            return RedirectToAction("ListAllAccounts");
         }
     }
 }
