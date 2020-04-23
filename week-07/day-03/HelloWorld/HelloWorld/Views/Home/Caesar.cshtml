@@ -1,0 +1,33 @@
+﻿@model string[]
+@{ if (Model[0] != null)
+    {
+        string encodedText = Model[1];
+        string originalText = Model[0];
+    }
+}
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Caesar</title>
+</head>
+<body>
+    <form action="caesar" target="useful" method="get">
+        <h4>Encoder/Decoder</h4>
+        <input id="inputEncoderText" type="text" placeholder="enter the text to encode" name="text" required /> <br />
+        <input id="inputEncoderNumber" type="number" placeholder="1" name="number" required min="0" /><br />
+        <input type="submit" value="encode" name="operation" /><br />
+        <input type="submit" value="decode" name="operation" /><br />
+
+    </form>
+    <p>The text entered: @Model[0]</p>
+    <p>Encoded text: @Model[1]</p>
+</body>
+</html>
