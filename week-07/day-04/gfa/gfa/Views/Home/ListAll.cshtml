@@ -1,0 +1,22 @@
+﻿@model List<string>
+@{
+    List<string> studentList = Model != null ? Model : new List<string>();
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>ListAll</h1>
+    <ul>
+        <h2>Student names</h2>
+        @foreach (var student in studentList)
+        {
+            <li>@student</li>
+        }
+    </ul>
+    @Html.ActionLink("Add new student", "add", "gfa")<br />
+    @Html.ActionLink("Back to index", "", "gfa")<br />
+</body>
+</html>
+

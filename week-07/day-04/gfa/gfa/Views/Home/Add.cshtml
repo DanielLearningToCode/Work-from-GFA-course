@@ -1,0 +1,18 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>Add Students</h1>
+
+    @using (Html.BeginForm("save", "gfa", FormMethod.Get))
+    {
+        <label for= "student"> The name of the new student</label>
+        <input id = "student" type = "text" name = "name" autofocus required/>
+        <input type = "submit" value = "add new student"/>
+    }
+    @Html.ActionLink("Back to index", "", "gfa")
+</body>
+</html>
+
+
