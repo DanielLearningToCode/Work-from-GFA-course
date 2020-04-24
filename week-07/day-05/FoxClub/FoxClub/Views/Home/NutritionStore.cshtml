@@ -1,0 +1,34 @@
+﻿@model FoxClub.Models.Fox
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Nutrition store</title>
+</head>
+<body>
+    @Html.ActionLink("Information", "info", "Home")<br />
+    @Html.ActionLink("Nutrition store", "NutritionStore", "Home")<br />
+    @Html.ActionLink("Trick center", "TrickCenter", "Home")<br />
+    @Html.ActionLink("Action history", "ActionHistory", "Home")<br />
+    @using (Html.BeginForm("NutritionStore", "Home", FormMethod.Post))
+    {
+        <label for="Food">Food</label>
+        <select id="Food" name="Food">
+            <option value="Pizza">Pizza</option>
+            <option value="Bread">Bread</option>
+            <option value="Salade">Salade</option>
+            <option value="Baguette">Baguette</option>
+        </select>
+        <label for="Drink">Drink</label>
+        <select id="Drink" name="Drink">
+            <option value="Water">Water</option>
+            <option value="Lemonade">Lemonade</option>
+            <option value="Coffee">Coffee</option>
+            <option value="Rum">Rum</option>
+        </select>
+        <input type="hidden" id="Name" Name="@Model.Name" />
+        <input type="submit" value="Change" name="Change" /> 
+    }
+    @{ 
+        <p>Current state: @Model.Food @Model.Drink</p>
+    }
+</body>
+</html>

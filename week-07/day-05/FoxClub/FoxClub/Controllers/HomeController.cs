@@ -22,10 +22,10 @@ namespace FoxClub.Controllers
         {
             if (string.IsNullOrEmpty(name))
             {
-            Fox defaultFox = new Fox();
-            defaultFox.Tricks.Add("Write Html");
-            defaultFox.Tricks.Add("Code in Java");
-            return View(defaultFox); 
+                Fox defaultFox = new Fox();
+                defaultFox.Tricks.Add("Write Html");
+                defaultFox.Tricks.Add("Code in Java");
+                return View(defaultFox);
             }
             return View(foxService.FindFox(name));
         }
@@ -36,10 +36,25 @@ namespace FoxClub.Controllers
             return View();
         }
         [HttpPost("login")]
-        public IActionResult Login(Fox fox)
+        public IActionResult Login(string name)
         {
-            foxService.AddFox(fox);
-            return RedirectToAction("Index", fox);
+            foxService.AddFox(name);
+            return RedirectToAction("Index", new { name = name });
+        }
+        [HttpGet("Nutrition")]
+        public IActionResult NutritionStore(string Name)
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return RedirectToAction("Login");
+            }
+            return View(foxService.FindFox(Name));
+        }
+        [HttpPost("Nutrition")]
+        public IActionResult NutritionStore(string Name, string Food, string Drink)
+        {
+            foxService.ChangeNutrition(Name, Food, Drink);
+            return View("Index", Name as object);
         }
     }
 }

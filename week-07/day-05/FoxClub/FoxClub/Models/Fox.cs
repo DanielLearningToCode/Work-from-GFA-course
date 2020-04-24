@@ -15,7 +15,10 @@ namespace FoxClub.Models
         public string Drink { get; set; }
         public Fox(string name, string food = "salad", string drink = "water")
         {
+            Name = name;
             Tricks = new List<string>();
+            Food = food;
+            Drink = drink;
         }
         public Fox()
         {

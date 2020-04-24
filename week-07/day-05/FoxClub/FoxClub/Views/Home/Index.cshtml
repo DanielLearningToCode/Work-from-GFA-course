@@ -7,13 +7,21 @@
     <p>@Html.ActionLink("Information", "info", "/")</p>
     <img src="~/greenfox.png" />
     <p>This is @Model.Name currently living on @Model.Food and @Model.Drink. He knows @Model.Tricks?.Count tricks.</p>
-    <h2>Known tricks</h2>
-    <ul>
-        @foreach (var trick in Model?.Tricks)
-        {
-        <li>@trick</li>
-        }
-    </ul>
+    @if (Model.Tricks.Count == 0)
+    {
+        <p>You know no tricks yet. Go and learn some.</p>
+    }
+    else
+    {
+        <h2>Known tricks</h2>
+        <ul>
+            @foreach (var trick in Model?.Tricks)
+            {
+                <li>@trick</li>
+            }
+        </ul>
+    }
+
 
 </body>
 </html>
