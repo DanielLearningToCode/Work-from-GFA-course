@@ -1,28 +1,16 @@
 ﻿@model FoxClub.Models.Fox
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <p>@Html.ActionLink("Information", "info", "/")</p>
-    <img src="~/greenfox.png" />
-    <p>This is @Model.Name currently living on @Model.Food and @Model.Drink. He knows @Model.Tricks?.Count tricks.</p>
-    @if (Model.Tricks.Count == 0)
-    {
-        <p>You know no tricks yet. Go and learn some.</p>
-    }
-    else
-    {
-        <h2>Known tricks</h2>
+    <head>
+    <title>Index</title>
+    </head>
+    <body>
+        <h1>Welcome to Fox programmer club</h1>
         <ul>
-            @foreach (var trick in Model?.Tricks)
-            {
-                <li>@trick</li>
-            }
+            <li>@Html.ActionLink("Login", "Login", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Nutrition", "NutritionStore", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Information", "Information", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Trick center", "Tricks", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Members", "ShowMembers", "Home", new { name = Model?.Name })</li>
         </ul>
-    }
-
-
-</body>
+    </body>
 </html>
-

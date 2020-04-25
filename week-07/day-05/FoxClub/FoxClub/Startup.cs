@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoxClub.Models;
+using FoxClub.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +19,8 @@ namespace FoxClub
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<FoxList>();
+            services.AddSingleton<FoxService>();
+            services.AddSingleton<FoxesViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

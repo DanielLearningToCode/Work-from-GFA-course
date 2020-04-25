@@ -22,10 +22,10 @@ namespace FoxClub.Models
         }
         public Fox()
         {
-            Name = "Mr. Fox";
-            Tricks = new List<string>();
-            Food = "salad";
-            Drink = "water";
+            Name = "Mr Fox";
+            Tricks = new List<string>() { "Write HTML", "Code in Java" };
+            Food = "pizza";
+            Drink = "lemonade";
         }
     }
 }

@@ -4,10 +4,11 @@
     <title>Nutrition store</title>
 </head>
 <body>
-    @Html.ActionLink("Information", "info", "Home")<br />
-    @Html.ActionLink("Nutrition store", "NutritionStore", "Home")<br />
-    @Html.ActionLink("Trick center", "TrickCenter", "Home")<br />
-    @Html.ActionLink("Action history", "ActionHistory", "Home")<br />
+    @Html.ActionLink("Information", "Information", "Home", new { name = Model?.Name })<br />
+    @Html.ActionLink("Nutrition store", "NutritionStore", "Home", new { name = Model?.Name })<br />
+    @Html.ActionLink("Trick center", "Tricks", "Home", new { name = Model?.Name })<br />
+    @Html.ActionLink("Action history", "ActionHistory", "Home", new { name = Model?.Name })<br />
+    @Html.ActionLink("Members", "ShowMembers", "Home", new { name = Model?.Name })<br />
     @using (Html.BeginForm("NutritionStore", "Home", FormMethod.Post))
     {
         <label for="Food">Food</label>
@@ -24,11 +25,12 @@
             <option value="Coffee">Coffee</option>
             <option value="Rum">Rum</option>
         </select>
-        <input type="hidden" id="Name" Name="@Model.Name" />
-        <input type="submit" value="Change" name="Change" /> 
+        <input type="hidden" id="Name" Name="Name" value="@Model?.Name" />
+        <input type="submit" value="Change" />
     }
-    @{ 
-        <p>Current state: @Model.Food @Model.Drink</p>
+    @{
+        <span>Current state: </span>
+        <p>Food: @Model?.Food Drink: @Model?.Drink</p>
     }
 </body>
 </html>
