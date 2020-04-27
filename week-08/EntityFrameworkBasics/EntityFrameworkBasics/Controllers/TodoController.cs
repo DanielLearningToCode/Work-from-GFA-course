@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFrameworkBasics.Models;
+using EntityFrameworkBasics.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EntityFrameworkBasics.Controllers
@@ -10,20 +11,47 @@ namespace EntityFrameworkBasics.Controllers
     [Route("todo")]
     public class TodoController : Controller
     {
+        private ToDoService toDoService;
+        public TodoController(ToDoService toDoService)
+        {
+            this.toDoService = toDoService;
+        }
+        [Route("")]
         [Route("index")]
-        public IActionResult Index()
+        public IActionResult Index(bool isActive)
+        {
+            List<ToDo> result = isActive ? toDoService.ReturnActiveTasks() : toDoService.ListTasks();
+            return View(result);
+        }
+        [HttpGet("add")]
+        public IActionResult Create()
         {
             return View();
         }
-        [Route("")]
-        [Route("list")]
-        public IActionResult List()
+        [HttpPost("add")]
+        public IActionResult Create(ToDo task)
         {
-            List<ToDo> todos = new List<ToDo>() {
-                new ToDo { Id = 1, Title = "Sleep", IsDone = false, IsUrgent = true },
-                new ToDo{Id = 2, Title = "Work", IsDone = false, IsUrgent = false},
-                new ToDo{Id = 3, Title = "Buy milk", IsDone = true, IsUrgent = false } };
-            return View(todos);
+            toDoService.CreateTask(task);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("/Delete/{id}")]
+        public IActionResult Delete([FromRoute] long id)
+        {
+            toDoService.DeleteTask(id);
+            return RedirectToAction("Index");
+        }
+        [HttpGet("Edit/{id}")]
+        public IActionResult Edit([FromRoute]long id)
+        {
+            return View(toDoService.GetTask(id));
+        }
+        [HttpPost("Edit/{id}")]
+        public IActionResult Edit([FromRoute]long id, string title, bool isDone, bool isUrgent)
+        {
+            ToDo task = toDoService.GetTask(id);
+            toDoService.EditTask(task, title, isDone, isUrgent);
+            return View(task);
         }
     }
 }
