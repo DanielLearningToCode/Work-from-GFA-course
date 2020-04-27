@@ -1,0 +1,18 @@
+﻿@model string[]
+@{
+    string message = Model[0];
+    string color = Model[1];
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmailValidator</title>
+</head>
+<body>
+    <p style="color: @color">  @message  </p>
+    @Html.ActionLink("Back to main page","","useful")
+    <p><a href="/useful/">Back to main page</a></p>
+</body>
+</html>
