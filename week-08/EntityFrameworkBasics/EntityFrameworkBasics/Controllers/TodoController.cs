@@ -16,8 +16,8 @@ namespace EntityFrameworkBasics.Controllers
         {
             this.toDoService = toDoService;
         }
-        [Route("")]
-        [Route("index")]
+        [HttpGet("")]
+        [HttpGet("index")]
         public IActionResult Index(bool isActive)
         {
             List<ToDo> result = isActive ? toDoService.ReturnActiveTasks() : toDoService.ListTasks();
