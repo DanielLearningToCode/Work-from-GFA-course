@@ -1,0 +1,16 @@
+﻿@model List<EntityFrameworkBasics.Models.ToDo>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>List tasks</title>
+</head>
+<body>
+    <h1>ToDos for today:</h1>
+    <ul>
+        @foreach (var task in Model)
+        {
+            <li>@task.Title</li>
+        }
+    </ul>
+</body>
+</html>
+
