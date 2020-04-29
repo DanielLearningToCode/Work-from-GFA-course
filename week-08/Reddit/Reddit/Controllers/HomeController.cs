@@ -20,10 +20,10 @@ namespace Reddit.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
-            IndexViewModel model = new IndexViewModel() { Posts = postService.GetPosts() };
+            IndexViewModel model = new IndexViewModel() { Posts = postService.GetSortedPosts() };
             return View(model);
         }
-
+        
         [HttpGet("SubmitNew")]
         public IActionResult SubmitNew()
         {
@@ -50,12 +50,5 @@ namespace Reddit.Controllers
             postService.DownVote(id);
             return RedirectToAction("Index");
         }
-        [HttpGet("{id}/ModifyPost")]
-        public IActionResult ModifyPost([FromRoute] int id)
-        {
-
-            return View();
-        }
-
     }
 }

@@ -14,5 +14,13 @@ namespace Reddit.Context
 
         }
         public DbSet<Post> Posts { get; set; }
+
+        //sets GETDATE function in the database. Cannot be done via annotations.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Post>()
+                    .Property(s => s.CreatedDate)
+                    .HasDefaultValueSql("GETDATE()");
+        }
     }
 }

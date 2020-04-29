@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reddit.Context;
 
 namespace Reddit.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200429125600_add_time")]
+    partial class add_time
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,11 +28,6 @@ namespace Reddit.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
@@ -41,6 +38,9 @@ namespace Reddit.Migrations
 
                     b.Property<int>("Votes")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("time")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
