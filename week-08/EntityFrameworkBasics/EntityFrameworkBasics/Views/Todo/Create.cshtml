@@ -1,4 +1,5 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@model EntityFrameworkBasics.Views.Todo.CreateViewModel
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Create new tasks</title>
 </head>
@@ -7,6 +8,13 @@
     {
         <label for="title">Task name: </label>
         <input type="text" id="title" name="title" /><br />
+        <label for="assignee">Name of assignee:</label>
+        <select id="assignee" name="assignee">
+            @foreach (var assignee in Model.Assignees)
+            {
+                <option value="@assignee.Name">@assignee.Name</option>
+            }
+        </select>
         <input type="submit" value="create new task" />
     }
     @Html.ActionLink("Index", "Index", "ToDo")

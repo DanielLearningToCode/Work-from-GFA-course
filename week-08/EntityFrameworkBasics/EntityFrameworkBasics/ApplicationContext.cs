@@ -12,6 +12,7 @@ namespace EntityFrameworkBasics
         public ApplicationContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<ToDo> todos { get; set; }
+        public DbSet<ToDo> Todos { get; set; }
+        public DbSet<Assignee> Assignees { get; set; }
     }
 }

@@ -1,0 +1,51 @@
+﻿@model List<EntityFrameworkBasics.Models.Assignee>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Assignees</title>
+</head>
+<body>
+    @Html.ActionLink("Back to index", "Index", "ToDo")
+    <h1>Assignees: </h1>
+    @if (Model != null)
+    {<table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var assignee in Model)
+                {
+
+                    @using (Html.BeginForm("EditAssignee", "Todo", FormMethod.Post))
+                    {
+                        <tr>
+                            <td>@Html.EditorFor(l => assignee.Name, "name", "name")</td>
+                            <td> <input type="email" name="email" value="@assignee.Email" /></td>
+                          @*  <td>@Html.EditorFor(l => assignee.Email, "email", "email")</td>*@
+                            <td>@Html.ActionLink("delete", "DeleteAssignee", "Todo", new { id = assignee.Id })</td>
+                            <td><input type="hidden" name="id" value="@assignee.Id" /></td>
+                            <td><input type="submit" value="edit" /></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>There are currently no assignees in the database.</p>
+    }
+    <h2>Crate new assignee</h2>
+    @using (Html.BeginForm("AddAssignee", "ToDo", FormMethod.Post))
+    {
+        <input id="name" type="text" name="name" required />
+        <input id="email" type="email" name="email" />
+        <input type="submit" value="Create new user" />
+    }
+
+</body>
+</html>

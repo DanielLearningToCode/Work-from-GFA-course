@@ -3,14 +3,16 @@ using EntityFrameworkBasics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EntityFrameworkBasics.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200428121814_add_assignee_with_key")]
+    partial class add_assignee_with_key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,12 +31,11 @@ namespace EntityFrameworkBasics.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assignees");
+                    b.ToTable("assignees");
                 });
 
             modelBuilder.Entity("EntityFrameworkBasics.Models.ToDo", b =>
@@ -57,15 +58,13 @@ namespace EntityFrameworkBasics.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
 
-                    b.ToTable("Todos");
+                    b.ToTable("todos");
                 });
 
             modelBuilder.Entity("EntityFrameworkBasics.Models.ToDo", b =>
