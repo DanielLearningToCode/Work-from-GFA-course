@@ -1,0 +1,19 @@
+﻿@model Reddit.Models.IndexViewModel
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Index</title>
+</head>
+<body>
+    @Html.ActionLink("Submit New", "SubmitNew", "Home")
+
+    <h1>Trending posts</h1>
+    @foreach (var post in Model.Posts)
+    {
+        <span>@Html.ActionLink("+", "UpVote", "Home", new {id = post.Id })</span>
+        <span>@Html.ActionLink("-", "DownVote", "Home", new { id = post.Id })</span>
+        <span>@post.Votes</span>
+        <span>@post.Title</span>
+        <br />
+    }
+</body>
+</html>

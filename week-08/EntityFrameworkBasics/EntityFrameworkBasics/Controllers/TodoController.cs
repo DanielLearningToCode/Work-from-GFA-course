@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EntityFrameworkBasics.Models;
+﻿using EntityFrameworkBasics.Models;
 using EntityFrameworkBasics.Services;
-using EntityFrameworkBasics.Views.Todo;
+using EntityFrameworkBasics;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EntityFrameworkBasics.Controllers
 {

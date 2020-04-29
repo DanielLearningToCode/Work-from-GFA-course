@@ -1,0 +1,15 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Submit new post</title>
+</head>
+<body>
+    <h1>Submit new post</h1>
+    @using (Html.BeginForm("SubmitNew", "Home", FormMethod.Post))
+    {<label for="Title">Title:</label>
+        <input id="Title" type="text" name="Title" / required><br />
+        <label for="URL">URL:</label>
+        <input id="URL" type="URL" name="URL" required /> <br />
+        <input type="submit" value="Submit" />
+    }
+</body>
+</html>
