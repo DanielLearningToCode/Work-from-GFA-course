@@ -9,6 +9,8 @@ namespace Reddit.Models
     public class IndexViewModel
     {
         public ICollection<Post> Posts { get; set; }
+        public int PageCount { get; set; }
+        public int CurrentPage { get; set; }
 
         public IndexViewModel()
         {

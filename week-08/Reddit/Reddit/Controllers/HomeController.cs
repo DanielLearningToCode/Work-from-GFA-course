@@ -18,10 +18,9 @@ namespace Reddit.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index()
+        public IActionResult Index(int page)
         {
-            IndexViewModel model = new IndexViewModel() { Posts = postService.GetSortedPosts() };
-            return View(model);
+            return View(postService.CreateViewModel(page));
         }
         
         [HttpGet("SubmitNew")]
@@ -38,17 +37,17 @@ namespace Reddit.Controllers
         }
 
         [HttpGet("{id}/UpVote")]
-        public IActionResult UpVote([FromRoute]int id)
+        public IActionResult UpVote([FromRoute]int id, int currentPage)
         {
             postService.UpVote(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { page = currentPage });
         }
 
         [HttpGet("{id}/DownVote")]
-        public IActionResult DownVote([FromRoute]int id)
+        public IActionResult DownVote([FromRoute]int id, int currentPage)
         {
             postService.DownVote(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { page = currentPage });
         }
     }
 }

@@ -1,20 +1,30 @@
 ﻿@model Reddit.Models.IndexViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <title>Index</title>
 </head>
 <body>
     @Html.ActionLink("Submit New", "SubmitNew", "Home")
 
     <h1>Trending posts</h1>
+    <span>Vote</span>
+    <span>Current Votes</span>
+    <span>Title</span> 
+    <span>Published</span><br />
     @foreach (var post in Model.Posts)
     {
-        <span>@Html.ActionLink("+", "UpVote", "Home", new {id = post.Id })</span>
-        <span>@Html.ActionLink("-", "DownVote", "Home", new { id = post.Id })</span>
-        <span>@post.Votes</span>
-        <span><a href="@post.URL" target="_blank">@post.Title</a></span>
-        <span>@(post?.CreatedDate)</span>
+        <span class="vote-btn">@Html.ActionLink(" + ", "UpVote", "Home", new { id = post.Id, currentPage = Model.CurrentPage })</span>
+        <span class="vote-btn">@Html.ActionLink(" - ", "DownVote", "Home", new { id = post.Id, currentPage = Model.CurrentPage })</span>
+        <span class="votes">@post.Votes</span>
+        <span class="title-link"><a href="@post.URL" target="_blank">@post.Title</a></span>
+        <span class="published">@(post?.CreatedDate)</span>
         <br />
+    }
+    <p>Page: </p>
+    @for (int i = 0; i < Model.PageCount; i++)
+    {
+        @Html.ActionLink(Convert.ToString(i) + "  ", "Index", "Home", new { page = i })
     }
 </body>
 </html>
