@@ -12,7 +12,9 @@ namespace Reddit.Models
         public int PageCount { get; set; }
         public int CurrentPage { get; set; }
         public bool SortByDate { get; set; }
+        public int MyProperty { get; set; }
         public ICollection<string> Names { get; set; }
+        public int PostsPerPage { get; set; }
         public IndexViewModel()
         {
             Posts = new List<Post>();

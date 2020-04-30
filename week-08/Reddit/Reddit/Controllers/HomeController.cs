@@ -18,11 +18,11 @@ namespace Reddit.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index(int page, bool sortByDate)
+        public IActionResult Index(int page, bool sortByDate, int postsPerPage = 5)
         {
-            return View(postService.CreateViewModel(page, sortByDate));
+            return View(postService.CreateViewModel(page, sortByDate, postsPerPage));
         }
-        
+
         [HttpGet("SubmitNew")]
         public IActionResult SubmitNew()
         {
@@ -37,29 +37,30 @@ namespace Reddit.Controllers
         }
 
         [HttpGet("{id}/UpVote")]
-        public IActionResult UpVote([FromRoute]int id, int currentPage, bool sortByDate)
+        public IActionResult UpVote([FromRoute]int id, int page, bool sortByDate, int postsPerPage = 5)
         {
             postService.UpVote(id);
-            return RedirectToAction("Index", new { page = currentPage, sortByDate });
+            return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage });
         }
 
         [HttpGet("{id}/DownVote")]
-        public IActionResult DownVote([FromRoute]int id, int currentPage, bool sortByDate)
+        public IActionResult DownVote([FromRoute]int id, int page, bool sortByDate, int postsPerPage = 5)
         {
             postService.DownVote(id);
-            return RedirectToAction("Index", new { page = currentPage, sortByDate });
+            return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage });
         }
-        [HttpGet("SortByDate")]
-        public IActionResult SortByDate(int page, bool sortByDate )
+        /*[HttpGet("SortByDate")]
+        public IActionResult SortByDate(int page, bool sortByDate)
         {
             return RedirectToAction("Index", new { page = page, sortByDate = sortByDate });
         }
-/*
+*/
         [HttpGet("FilterByUser")]
-        public IActionResult FilterByUser(string author)
+        public IActionResult FilterByUser(int page, bool sortByDate, int postsPerPage = 5, string author = "")
         {
 
-        }*/
+            return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage, author = author });
+        }
 
     }
 }

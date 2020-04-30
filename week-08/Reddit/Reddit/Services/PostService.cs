@@ -51,13 +51,13 @@ namespace Reddit.Services
             return sortedPosts;
         }*/
 
-        public List<Post> GetNextPosts(int page, out int pageCount, bool sortByDate)
+        public List<Post> GetNextPosts(int page, out int pageCount, bool sortByDate, int postsPerPage)
         {
             List<Post> result = new List<Post>();
             GetSortedPosts = SelectSorting(sortByDate);
             List<Post> posts = GetSortedPosts();
             int postCount = posts.Count;
-            int postsPerPage = 5;
+            
             int remainingPosts = postCount - page * postsPerPage;
             pageCount = postCount % postsPerPage > 0 ? ((postCount / postsPerPage) + 1) : (postCount / postsPerPage);
             int skip = page * postsPerPage;
@@ -65,10 +65,11 @@ namespace Reddit.Services
             result = posts.Skip(skip).Take(take).ToList();
             return result;
         }
-        public IndexViewModel CreateViewModel(int page, bool sortByDate)
+        public IndexViewModel CreateViewModel(int page, bool sortByDate, int postsPerPage)
         {
-            List<Post> posts = GetNextPosts(page, out int pageCount, sortByDate);
-            IndexViewModel model = new IndexViewModel() { Posts = posts, PageCount = pageCount, CurrentPage = page, SortByDate = sortByDate };
+            List<Post> posts = GetNextPosts(page, out int pageCount, sortByDate, postsPerPage);
+            List<string> names = db.Users.Select(u => u.Name).ToList();
+            IndexViewModel model = new IndexViewModel() { Posts = posts, PageCount = pageCount, CurrentPage = page, SortByDate = sortByDate, Names = names, PostsPerPage = postsPerPage};
             return model;
         }
 
