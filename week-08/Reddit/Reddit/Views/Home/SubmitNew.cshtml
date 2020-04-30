@@ -1,14 +1,23 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@model Reddit.Models.SubmitViewModel
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <title>Submit new post</title>
 </head>
 <body>
     <h1>Submit new post</h1>
     @using (Html.BeginForm("SubmitNew", "Home", FormMethod.Post))
     {<label for="Title">Title:</label>
-        <input id="Title" type="text" name="Title" / required><br />
+        <input id="title" type="text" name="title" / required><br />
         <label for="URL">URL:</label>
         <input id="URL" type="URL" name="URL" required /> <br />
+        <label for="name">Author: </label>
+        <select id="name" name="name" required>
+            @foreach (var name in Model.Users)
+            {
+                <option value="@name">@name</option>
+            }
+        </select>
         <input type="submit" value="Submit" />
     }
 </body>

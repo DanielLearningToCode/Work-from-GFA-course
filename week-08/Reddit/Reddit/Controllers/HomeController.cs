@@ -18,36 +18,48 @@ namespace Reddit.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index(int page)
+        public IActionResult Index(int page, bool sortByDate)
         {
-            return View(postService.CreateViewModel(page));
+            return View(postService.CreateViewModel(page, sortByDate));
         }
         
         [HttpGet("SubmitNew")]
         public IActionResult SubmitNew()
         {
-            return View();
+            return View(postService.CreateSubmitViewModel());
         }
 
         [HttpPost("SubmitNew")]
-        public IActionResult SubmitNew(Post post)
+        public IActionResult SubmitNew(Post post, string name)
         {
-            postService.SubmitNewPost(post);
+            postService.SubmitNewPost(post, name);
             return RedirectToAction("Index");
         }
 
         [HttpGet("{id}/UpVote")]
-        public IActionResult UpVote([FromRoute]int id, int currentPage)
+        public IActionResult UpVote([FromRoute]int id, int currentPage, bool sortByDate)
         {
             postService.UpVote(id);
-            return RedirectToAction("Index", new { page = currentPage });
+            return RedirectToAction("Index", new { page = currentPage, sortByDate });
         }
 
         [HttpGet("{id}/DownVote")]
-        public IActionResult DownVote([FromRoute]int id, int currentPage)
+        public IActionResult DownVote([FromRoute]int id, int currentPage, bool sortByDate)
         {
             postService.DownVote(id);
-            return RedirectToAction("Index", new { page = currentPage });
+            return RedirectToAction("Index", new { page = currentPage, sortByDate });
         }
+        [HttpGet("SortByDate")]
+        public IActionResult SortByDate(int page, bool sortByDate )
+        {
+            return RedirectToAction("Index", new { page = page, sortByDate = sortByDate });
+        }
+/*
+        [HttpGet("FilterByUser")]
+        public IActionResult FilterByUser(string author)
+        {
+
+        }*/
+
     }
 }

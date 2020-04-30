@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Reddit.Context;
 using Reddit.Models;
 using System;
@@ -11,54 +12,70 @@ namespace Reddit.Services
     public class PostService
     {
         private ApplicationDBContext db;
+     
+        public delegate List<Post> SortingDelegate();
+        public SortingDelegate GetSortedPosts;
         public PostService(ApplicationDBContext db)
         {
             this.db = db;
         }
-        public List<Post> GetPosts()
+
+        public SortingDelegate SelectSorting(bool sortByDate)
         {
-            List<Post> result = db.Posts.ToList();
-            return result;
+            if (sortByDate)
+            {
+                return GetSortedPosts = SortByDate;
+            }
+             return GetSortedPosts = SortByVotes;
         }
-        public List<Post> GetSortedPosts()
+
+        public List<Post> SortByDate()
+        {
+            var sortedPosts = GetPosts().OrderByDescending(p => p.CreatedDate).ToList();
+            return sortedPosts;
+        }
+        public List<Post> SortByVotes()
         {
             var sortedPosts = GetPosts().OrderByDescending(p => p.Votes).ToList();
             return sortedPosts;
         }
 
-        /* public KeyValuePair<int, List<Post>> GetNextPosts(int? page)
-         {
-             var posts = GetSortedPosts();
-             int postsPerPage = 5;
-             int totalPosts = posts.Count;
-             // logika abych necetl dal nez je prvku, staci tlacitko next a zpet
-             int skip = (int)page * postsPerPage;
-             var selection = posts.Skip(skip * postsPerPage).Take(postsPerPage).ToList();
-             KeyValuePair<int, List<Post>> result = new KeyValuePair<int, List<Post>>((int)page, selection);
-             return result;
-         }*/
-        public List<Post> GetNextPosts(int page, out int pageCount)
+        public List<Post> GetPosts()
+        {
+            List<Post> result = db.Posts.Include(p => p.User).ToList();
+            return result;
+        }
+/*        public List<Post> GetSortedPosts()
+        {
+            var sortedPosts = GetPosts().OrderByDescending(p => p.Votes).ToList();
+            return sortedPosts;
+        }*/
+
+        public List<Post> GetNextPosts(int page, out int pageCount, bool sortByDate)
         {
             List<Post> result = new List<Post>();
-            var posts = GetSortedPosts();
+            GetSortedPosts = SelectSorting(sortByDate);
+            List<Post> posts = GetSortedPosts();
             int postCount = posts.Count;
             int postsPerPage = 5;
             int remainingPosts = postCount - page * postsPerPage;
-            pageCount = postCount % postsPerPage > 0 ? ((postCount / postsPerPage) + 1) : (postCount / postsPerPage);  
+            pageCount = postCount % postsPerPage > 0 ? ((postCount / postsPerPage) + 1) : (postCount / postsPerPage);
             int skip = page * postsPerPage;
             int take = remainingPosts < postsPerPage ? remainingPosts : postsPerPage;
             result = posts.Skip(skip).Take(take).ToList();
             return result;
         }
-        public IndexViewModel CreateViewModel(int page)
+        public IndexViewModel CreateViewModel(int page, bool sortByDate)
         {
-            List<Post> posts = GetNextPosts(page, out int pageCount);
-            IndexViewModel model = new IndexViewModel() { Posts = posts, PageCount = pageCount, CurrentPage = page };
+            List<Post> posts = GetNextPosts(page, out int pageCount, sortByDate);
+            IndexViewModel model = new IndexViewModel() { Posts = posts, PageCount = pageCount, CurrentPage = page, SortByDate = sortByDate };
             return model;
         }
 
-        public void SubmitNewPost(Post post)
+        public void SubmitNewPost(Post post, string name)
         {
+            User user = db.Users.FirstOrDefault(u => u.Name == name);
+            post.User = user;
             db.Posts.Add(post);
             db.SaveChanges();
         }
@@ -73,6 +90,12 @@ namespace Reddit.Services
             Post post = db.Posts.Find(id);
             post.Votes--;
             db.SaveChanges();
+        }
+
+        public SubmitViewModel CreateSubmitViewModel()
+        {
+            List<string> users = db.Users.Select(u => u.Name).ToList();
+            return new SubmitViewModel() { Users = users };
         }
     }
 }
