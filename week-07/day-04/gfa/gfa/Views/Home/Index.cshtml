@@ -1,0 +1,13 @@
+﻿@model int
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+<h1>Index</h1>
+    <p>Current student count: @Model</p>
+    @Html.ActionLink("List all students", "list", "gfa")<br />
+    @Html.ActionLink("Add new student", "add", "gfa") <br />
+    @Html.ActionLink("Check whehter name is already in the list", "check", "gfa")
+</body>
+</html>

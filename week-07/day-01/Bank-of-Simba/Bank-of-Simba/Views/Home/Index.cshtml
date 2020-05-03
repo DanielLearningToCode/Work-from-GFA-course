@@ -1,0 +1,38 @@
+﻿@using Bank_of_Simba.Models;
+@model BankAccount;
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    @if (Model != null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Account holder name</th>
+                    <th>Account balance</th>
+                    <th>Animal type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>@Model.Name</th>
+                    <th>@Model.Balance.ToString("F2") Zebra</th>
+                    <th>@Model.AnimalType</th>
+                </tr>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Welcome to our bank</p>
+    }
+
+    <p>@ViewBag.Message</p><br />
+    <p>html raw: </p>
+    <p>@Html.Raw(ViewBag.Message)</p>
+</body>
+</html>
+<h1>Index</h1>
+

@@ -1,0 +1,78 @@
+﻿@using Bank_of_Simba.Models;
+@model List<BankAccount>
+@{ string color = "";}
+@{ string gold = "#D4AF37";}
+@{ string white = "FFFFFF";}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Modify or create an account</title>
+</head>
+<body>
+    @if (Model != null)
+    {
+        @using (Html.BeginForm("ModifyAccounts", "Home", FormMethod.Post))
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Account holder name</th>
+                        <th>Account balance</th>
+                        <th>Animal type</th>
+                        <th>Is king</th>
+                        <th>Bad Guy</th>
+                        <th>Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var account in Model)
+                    {
+                        color = account.King ? gold : white;
+                        <tr style="background-color:@color">
+                            <td>@account.Id</td>
+                            <td>@account.Name</td>
+                            <td>@account.Balance.ToString("0.00 Zebras") </td>
+                            <td>@account.AnimalType</td>
+                            <td>@account.King</td>
+                            <td>@account.Character</td>
+                            <td><input type="checkbox" name="id[]" value="@account.Id" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <input type="submit" value="increase balance" />
+        }
+        
+
+
+
+        @*@using (Html.BeginForm("CreateAccount", "home", FormMethod.Post))
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td><input type="text" name="name" placeholder="name" /></td>
+                    <td><input type="text" name="balance" value="0" placeholder="balance" /></td>
+                    <td><input type="text" name="animalType" placeholder="type of animal" /></td>
+                    <td><input type="text" name="isKing" placeholder="is king? y/n" /></td>
+                    <td><input type="text" name="isBadGuy" placeholder="is bad guy? y/n" /></td>
+                    <td><input type="submit" value="create new customer account" /></td>
+                </tr>
+            }*@
+
+
+    }
+    else
+    {
+        <p>Welcome to our bank</p>
+    }
+    @*@using (Html.BeginForm("Test", "Home", FormMethod.Post))
+        {
+        <input type="checkbox" name="id" value="1" />
+        <input type="checkbox" name="id" value="2" />
+        <input type="checkbox" name="id" value="3" />
+        <input type="submit" value="submit" />
+        }*@
+</body>
+</html>

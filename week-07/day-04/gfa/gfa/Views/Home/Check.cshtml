@@ -1,0 +1,19 @@
+﻿@model string
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    @using (Html.BeginForm("check", "gfa",FormMethod.Get ))
+    {   <h3>Check whether the name is already in the list</h3>
+        <input type="text" name="name" placeholder="enter student name to check" autofocus required />
+        <input type="submit" value="check" />
+    }
+    @if (Model != null)
+    {
+    <p>@Model</p>
+    }
+
+    @Html.ActionLink("Back to index", "", "gfa")
+  </body>
+</html>

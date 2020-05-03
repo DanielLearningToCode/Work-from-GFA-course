@@ -1,0 +1,38 @@
+﻿@model FoxClub.Models.Fox
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Trick Center</title>
+</head>
+<body>
+    <ul>
+        <li>@Html.ActionLink("Login", "Login", "Home", new { name = Model?.Name })</li>
+        <li>@Html.ActionLink("Index", "Index", "Home", new { name = Model.Name })</li>
+        <li>@Html.ActionLink("Nutrition", "NutritionStore", "Home", new { name = Model?.Name })</li>
+        <li>@Html.ActionLink("Information", "Information", "Home", new { name = Model?.Name })</li>
+        <li>@Html.ActionLink("Members", "ShowMembers", "Home", new { name = Model?.Name })</li>
+    </ul>
+    <p>You are logged in as @Model.Name</p>
+    @if (Model.Tricks.Count != 0)
+    {
+        <p>Your current tricks are:</p>
+        <ul>
+            @foreach (var trick in Model.Tricks)
+            {
+                <li>@trick</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>You know no tricks yet</p>
+    }
+
+    @using (Html.BeginForm("Tricks", "Home", FormMethod.Post))
+    {
+        <input type="hidden" id="name" name="name" value="@Model.Name" />
+        <label for="trick">New trick: </label>
+        <input type="text" id="trick" name="trick" placeholder="name trick" required autofocus />
+        <input type="submit" value="Add trick" />
+    }
+</body>
+</html> 

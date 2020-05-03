@@ -1,0 +1,16 @@
+﻿@model FoxClub.Models.Fox
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <title>Index</title>
+    </head>
+    <body>
+        <h1>Welcome to Fox programmer club</h1>
+        <ul>
+            <li>@Html.ActionLink("Login", "Login", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Nutrition", "NutritionStore", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Information", "Information", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Trick center", "Tricks", "Home", new { name = Model?.Name })</li>
+            <li>@Html.ActionLink("Members", "ShowMembers", "Home", new { name = Model?.Name })</li>
+        </ul>
+    </body>
+</html>
