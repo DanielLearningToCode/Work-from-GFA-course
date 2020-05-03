@@ -49,16 +49,11 @@ namespace Reddit.Controllers
             postService.DownVote(id);
             return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage });
         }
-        /*[HttpGet("SortByDate")]
-        public IActionResult SortByDate(int page, bool sortByDate)
-        {
-            return RedirectToAction("Index", new { page = page, sortByDate = sortByDate });
-        }
-*/
+ 
         [HttpGet("FilterByUser")]
         public IActionResult FilterByUser(int page, bool sortByDate, int postsPerPage = 5, string author = "")
         {
-
+            //RedirectToPage()
             return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage, author = author });
         }
 
