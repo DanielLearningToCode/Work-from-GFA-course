@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using REST.Models;
 
 namespace REST.Controllers
@@ -61,8 +62,11 @@ namespace REST.Controllers
         }
 
         [HttpPost("dountil/{act}")]
-        public ActionResult DoUntil(string act, [FromBody] Number input)
+        public ActionResult DoUntil(string act, [FromBody] Number input )
         {
+           /* var a = input.ToString();
+            int number = JObject.Parse(a)["until"];*/    // using JOBject and parsing it to get te value
+
             if (input == null)
             {
                 return StatusCode(400, new { error = "Please provide a number!" });
@@ -75,6 +79,17 @@ namespace REST.Controllers
             {
                 return StatusCode(200, new { result = Services.Factor(input.Until) });
             }
+        }
+
+        [Route("arrays")]
+        [HttpPost]
+        public ActionResult Arrays([FromBody] ArrayHandler arrayHandler)
+        {
+            if (arrayHandler == null || arrayHandler?.What == null || arrayHandler?.Numbers == null)
+            {
+                return StatusCode(400, new { error = "Please provide what to do with the numbers!" });
+            }
+            return StatusCode(200, new { result = services.Calculate(arrayHandler) });
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using REST.Models;
+using System;
 
 namespace REST
 {
@@ -49,6 +50,49 @@ namespace REST
             }
         }
 
-
+        public ArrayHandler Calculate(ArrayHandler input)
+        {
+            ArrayHandler result = input;
+            if (input.What == "sum")
+            {
+                result.Result = SumArray(input.Numbers);
+            }
+            else if (input.What == "multiply")
+            {
+                result.Result = MultiplyArray(input.Numbers);
+            }
+            else if (input.What == "doubleAll")
+            {
+                result.ResultArray = DoubleArray(input.Numbers);
+            }
+            return result;
+        }
+        public int SumArray(int[] input)
+        {
+            int result = 0;
+            foreach (int num in input)
+            {
+                result += num;
+            }
+            return result;
+        }
+        public int MultiplyArray(int [] input)
+        {
+            int result = 1;
+            foreach (int num in input)
+            {
+                result *= num;
+            }
+            return result;
+        }
+        public int [] DoubleArray(int[] input)
+        {
+            int[] result = new int[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                result[i] = input[i] * 2;
+            }
+            return result;
+        } 
     }
 }
