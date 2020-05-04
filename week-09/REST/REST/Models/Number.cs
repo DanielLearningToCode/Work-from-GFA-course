@@ -12,10 +12,5 @@ namespace REST.Models
         {
 
         }
-
-        public Number(int until)
-        {
-            Until = until;
-        }
     }
 }

@@ -16,32 +16,5 @@ namespace REST
         {
 
         }
-        /*public ArrayHandler(int[] inputArray, string operation)
-        {
-            Numbers = inputArray;
-            switch (operation)
-            {
-                case "sum":
-                    {
-                        What = OperationTypes.sum;
-                        break;
-                    }
-                case "multiply":
-                    {
-                        What = OperationTypes.multiply;
-                        break;
-                    }
-                case "double":
-                    {
-                        What = OperationTypes.doubleAll;
-                        break;
-                    }
-                default:
-                    {
-                        What = OperationTypes.none;
-                        break;
-                    }
-            }
-        }*/
     }
 }

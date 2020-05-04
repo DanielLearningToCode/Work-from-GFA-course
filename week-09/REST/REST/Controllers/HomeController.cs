@@ -23,16 +23,17 @@ namespace REST.Controllers
             return File("index.html", "text/html");
         }
 
-        [HttpGet("doubling")]
+        [HttpGet("doubling/{input?}")]   // sends 200 even when no input is provided
         public dynamic Doubling(int? input)
         {
-            if (input == null)
+            if (!input.HasValue)
             {
                 return new { error = "Please provide an input!" };
             }
             Doubling result = new Doubling(input);
             return result;
         }
+
         [HttpGet("greeter")]
         public ActionResult<string> Greeter(Person person)     // Action result returns status
         {
@@ -55,9 +56,13 @@ namespace REST.Controllers
                 return StatusCode(200, new { welcome_message = $"Oh, hi there {person.Name}, my dear {person.Title}!" });
             }
         }
-        [HttpGet("appenda/{appendable}")]
+        [HttpGet("appenda/{appendable?}")]
         public dynamic AppendA(string appendable)
         {
+            if (string.IsNullOrEmpty(appendable))
+            {
+                return StatusCode(404);
+            }
             return new { appended = appendable + "a" };
         }
 
