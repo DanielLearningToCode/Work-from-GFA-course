@@ -17,15 +17,13 @@ namespace REST.Controllers
         }
 
         [HttpGet("doubling")]
-        public Doubling Doubling(int? input)
+        public dynamic Doubling(int? input)
         {
-            Doubling result;
             if (input == null)
             {
-                result = new Doubling() { Error = "Please provide an input!" };
-                return result;
+                return new { error = "Please provide an input!" };
             }
-            result = new Doubling(input);
+            Doubling result = new Doubling(input);
             return result;
         }
     }
