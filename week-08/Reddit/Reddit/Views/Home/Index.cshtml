@@ -1,0 +1,75 @@
+﻿@model Reddit.Models.IndexViewModel
+@{string sortType = Model.SortByDate ? "date" : "votes";
+    string select = "selected";
+    int[] choices = { 5, 10, 15 };
+
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <title>Index</title>
+</head>
+<body>
+    @Html.ActionLink("Submit New", "SubmitNew", "Home")
+
+    <h1>Trending posts</h1>
+    <p>
+        You are on page: @(Model.CurrentPage + 1), Sorted by: @sortType Post per page: @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {<input type="hidden" name="page" value="@Model.CurrentPage" />
+            <input type="hidden" name="sortByDate" value="@Model.SortByDate" />
+            <select id="postsPerPage" value="@Model.PostsPerPage" name="postsPerPage">
+                @foreach (int choice in choices)
+                {
+                    @if (choice == Model.PostsPerPage)
+                    {
+                        <option value="@choice" selected="@select">@choice</option>
+                    }
+                    else
+                    {
+                        <option value="@choice">@choice</option>
+                    }
+                }
+            </select>
+            <input type="submit" value="display" />
+        }</ p >
+        <span>@Html.ActionLink("Sort by date", "Index", "Home", new { page = Model.CurrentPage, sortByDate = true, postsPerPage = Model.PostsPerPage })</span>
+        <span>@Html.ActionLink("Sort by votes", "Index", "Home", new { page = Model.CurrentPage, sortByDate = false, postsPerPage = Model.PostsPerPage })</span>
+        <span>
+            @using (Html.BeginForm("FilterByUser", "Home", FormMethod.Post))
+            {
+                <input type="hidden" name="page" value="@Model.CurrentPage" />
+                <input type="hidden" name="sortByDate" value="@Model.SortByDate" />
+                <input type="hidden" id="postsPerPage" value="@Model.PostsPerPage" name="postsPerPage" />
+                <label for="author">Filter by author</label>
+                <select id="author" name="author">
+                    @foreach (var author in Model.Names)
+                    {
+                        <option value="@author">@author</option>
+                    }
+                </select>
+                <input type="submit" value="Filter" />
+            }
+        </span>
+        <span><strong>Vote</strong></span>
+        <span><strong>Current Votes</strong></span>
+        <span><strong>Title</strong></span>
+        <span><strong>Published</strong></span>
+        <span><strong>Author</strong></span><br />
+        @foreach (var post in Model.Posts)
+        {
+            <span class="vote-btn">@Html.ActionLink(" + ", "UpVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage })</span>
+            <span class="vote-btn">@Html.ActionLink(" - ", "DownVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage })</span>
+            <span class="votes">@post.Votes</span>
+            <span class="title-link"><a href="@post.URL" target="_blank">@post.Title</a></span>
+            <span class="published">@(post?.CreatedDate)</span>
+            <span class="user">@post.User.Name</span>
+            <br />
+        }
+    <p>Page: </p>
+    @for (int i = 0; i < Model.PageCount; i++)
+    {
+        @Html.ActionLink(Convert.ToString(i + 1) + "  ", "Index", "Home", new { page = i, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage })
+    }
+</body>
+</html>

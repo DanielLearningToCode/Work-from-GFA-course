@@ -1,0 +1,22 @@
+﻿@model EntityFrameworkBasics.Models.ToDo
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Edit task</title>
+</head>
+<body>
+    @Html.ActionLink("Back to index", "Index", "ToDo")
+    @using (Html.BeginForm("Edit", "ToDo", FormMethod.Post))
+    {
+        @Html.Label("Title", "Title");
+        @Html.EditorFor(t => t.Title, "title");
+        @Html.Label("description", "description");
+        @Html.EditorFor(t => t.Description, "description");
+        @Html.Label("IsDone", "Done");
+        @Html.CheckBoxFor(t => t.IsDone, "IsDone");
+        @Html.Label("IsUrgent", "Urgent");
+        @Html.CheckBoxFor(t => t.IsUrgent, "IsUrgent");
+        <input type="submit" value="edit" />
+    }
+
+</body>
+</html>

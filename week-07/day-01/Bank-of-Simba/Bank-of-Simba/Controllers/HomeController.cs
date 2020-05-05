@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,23 +51,28 @@ namespace Bank_of_Simba.Controllers
         {
             return View(accountList);
         }
+
         [HttpPost("ModifyAccounts")]
-        public IActionResult ModifyAccounts(int account)
+        public IActionResult ModifyAccounts(int[] id)
         {
-            if (accountList[account].King)
+            foreach (var accountId in id)
             {
-                accountList[account].Balance += 100;
-            }
-            else
-            {
-                accountList[account].Balance += 10;
+                if (accountList[accountId -1].King)
+                {
+                    accountList[accountId -1].Balance += 100;
+                }
+                else
+                {
+                    accountList[accountId - 1].Balance += 10;
+                }
             }
             return RedirectToAction("ListAllAccounts");
+
         }
-        [HttpPost ("CreateAccount")]
+        [HttpPost("CreateAccount")]
         public IActionResult CreateAccount(string name, decimal balance, string animalType, string isKing, string isBadGuy)
         {
-            if (name!=null && animalType !=null && isKing != null && isBadGuy != null)
+            if (name != null && animalType != null && isKing != null && isBadGuy != null)
             {
                 bool king = isKing == "y" ? true : false;
                 Characters character = isBadGuy == "y" ? Characters.Bad_guy : Characters.Good_guy;
@@ -75,6 +80,11 @@ namespace Bank_of_Simba.Controllers
                 accountList.Add(newAccount);
             }
             return RedirectToAction("ListAllAccounts");
+        }
+        [HttpPost("check")]
+        public IActionResult Test(int[] id)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

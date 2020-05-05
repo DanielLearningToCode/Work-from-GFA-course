@@ -1,0 +1,43 @@
+﻿@model List<EntityFrameworkBasics.Models.ToDo>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Index</title>
+</head>
+<body>
+    @using(Html.BeginForm("Index", "ToDo", FormMethod.Post))
+    {
+        <label for="searchedText">Search for task:</label>
+        <input id="searchedText" type="search" name="searchedText" required />
+        <input type="submit" value="Search" /><br />
+    }
+
+    <h1>Tasks for today:</h1>
+    @Html.ActionLink("Create new task", "Create", "ToDo")
+    @Html.ActionLink("Assignees", "ShowAssignees", "ToDo")
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Action</th>
+                <th>Done</th>
+                <th>Urgent</th>
+                <th>Assignee</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var task in Model)
+            {
+                <tr>
+                    <td>@task.Id</td>
+                    <td>@task.Title</td>
+                    <td>@task.IsDone</td>
+                    <td>@task.IsUrgent</td>
+                    <td>@task.Assignee.Name</td>
+                    <td>@Html.ActionLink("delete", "Delete", "ToDo", new { id = task.Id })</td>
+                    <td>@Html.ActionLink("edit", "Edit", "ToDo", new { id = task.Id })</td>
+                </tr>
+            }
+        </thead>
+    </table>
+</body>
+</html>
