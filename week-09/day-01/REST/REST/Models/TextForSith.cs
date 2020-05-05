@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace REST.Models
 {
-    public class Number
+    public class TextForSith
     {
-        public int Until { get; set; }
-        public Number()
-        {
-
-        }
+        public string Text{ get; set; }
     }
 }

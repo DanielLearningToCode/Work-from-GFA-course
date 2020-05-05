@@ -9,9 +9,9 @@ namespace REST
     public class ArrayHandler
     {
         public int[] Numbers { get; set; }
-        public int[] ResultArray { get; set; }
-        public int Result { get; set; }
         public string What { get; set; }
+        public int Result { get; set; }
+        public int[] ResultArray { get; set; }
         public ArrayHandler()
         {
 
