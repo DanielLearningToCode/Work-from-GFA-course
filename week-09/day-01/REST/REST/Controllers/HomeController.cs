@@ -36,10 +36,9 @@ namespace REST.Controllers
             logServices.SaveToDatabase(log);
             if (!input.HasValue)
             {
-                return new { error = "Please provide an input!" };
+                return StatusCode(400, Json(new { error = "Please provide an input!" }));
             }
             return Json(new { received = input, result = input * 2 });
-
             //Doubling result = new Doubling(input);
             //return result;
         }
@@ -84,17 +83,17 @@ namespace REST.Controllers
             /* var a = input.ToString();
              int number = JObject.Parse(a)["until"];*/    // using JOBject and parsing it to get the value i/o class
             logServices.SaveToDatabase(new Log(HttpContext.Request.RouteValues["action"].ToString(), JsonSerializer.Serialize(input)));
-            if (input == null)
+            if (input.Until == null)
             {
                 return StatusCode(400, new { error = "Please provide a number!" });
             }
             else if (input?.Act == "sum")
             {
-                return StatusCode(200, new { result = RESTServices.Sum(input.Until) });
+                return StatusCode(200, new { result = RESTServices.Sum((int)input.Until) });
             }
             else if(input?.Act == "factor")
             {
-                return StatusCode(200, new { result = RESTServices.Factor(input.Until) });
+                return StatusCode(200, new { result = RESTServices.Factor((int)input.Until) });
             }
             else
             {
@@ -112,6 +111,7 @@ namespace REST.Controllers
                 return StatusCode(400, new { error = "Please provide what to do with the numbers!" });
             }
             return StatusCode(200, new { result = restServices.Calculate(arrayHandler) });
+            //return StatusCode(200, new { result = restServices.Calculate(arrayHandler) });
         }
         [HttpGet("log")]
         public Logs GetLogs()

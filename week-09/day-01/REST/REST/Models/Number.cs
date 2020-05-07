@@ -9,12 +9,9 @@ namespace REST.Models
     public class Number
     {
         [HybridBindProperty(new[] {Source.Body, Source.Form, Source.QueryString, Source.Route })]
-        public int Until { get; set; }
+        public int? Until { get; set; }
         [HybridBindProperty(new[] { Source.Header, Source.QueryString, Source.Route })]
         public string Act { get; set; }
-        public Number()
-        {
 
-        }
     }
 }

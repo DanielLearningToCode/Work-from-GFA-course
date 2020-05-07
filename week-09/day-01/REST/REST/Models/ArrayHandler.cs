@@ -10,11 +10,8 @@ namespace REST
     {
         public int[] Numbers { get; set; }
         public string What { get; set; }
-        public int Result { get; set; }
+/*        public int Result { get; set; }
         public int[] ResultArray { get; set; }
-        public ArrayHandler()
-        {
-
-        }
+*/
     }
 }

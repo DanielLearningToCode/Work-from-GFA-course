@@ -41,22 +41,25 @@ namespace REST
             }
         }
 
-        public ArrayHandler Calculate(ArrayHandler input)
+        public dynamic Calculate(ArrayHandler input)
         {
             ArrayHandler result = input;
             if (input.What == "sum")
             {
-                result.Result = SumArray(input.Numbers);
+                return SumArray(input.Numbers);
+                //result.Result = SumArray(input.Numbers);
             }
             else if (input.What == "multiply")
             {
-                result.Result = MultiplyArray(input.Numbers);
+                return MultiplyArray(input.Numbers);
+                //result.Result = MultiplyArray(input.Numbers);
             }
             else if (input.What == "doubleAll")
             {
-                result.ResultArray = DoubleArray(input.Numbers);
+                return DoubleArray(input.Numbers);
+                //result.ResultArray = DoubleArray(input.Numbers);
             }
-            return result;
+            return 0;
         }
         public int SumArray(int[] input)
         {
