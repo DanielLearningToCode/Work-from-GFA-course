@@ -1,0 +1,43 @@
+﻿@model ChatApp.Models.MessagesViewModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rascal Chat</title>
+    <link href="~/StyleSheet.css" rel="stylesheet" />
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rascal chat client</h1>
+            <img src="https://cdn.drawception.com/images/avatars/628711-EFE.png" alt="avatar" class="avatar" /><br />
+            <br />
+        </header>
+        <main>
+            <div>@Html.ActionLink("Register", "Register", "Home")</div>
+            <div>@Html.ActionLink("Login", "Login", "Home")</div>
+
+            @foreach (var message in Model.Messages)
+            {
+                <div class="row">
+                    <div><img src="@message.Author.avatarurl" class="avatar" alt="avatar" /></div>
+                    <div>@message.Author.UserName</div>
+                    <div>@message.Created</div>
+                    <div>@message.Content</div>
+                </div>
+            }
+
+            <div>
+                @using (Html.BeginForm("Send", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="channelId" />
+                    <input type="hidden" name="channelSecret" />
+                    <input type="text" name="content" required placeholder="Put your message here" />
+                    <input type="submit" value="send" />
+                }
+            </div>
+        </main>
+    </div>
+</body>
+</html>
