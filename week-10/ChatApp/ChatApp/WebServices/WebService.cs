@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Channels;
 
 namespace ChatApp
 {
@@ -22,7 +23,7 @@ namespace ChatApp
         public MessagesViewModel GetMessages(int count)
         {
             var url = "api/channel/get-messages";
-            string json = SendDataToApi(new { count = count }, url);
+            string json = PostDataToApi(new { count = count }, url);
             MessagesViewModel viewModel = JsonConvert.DeserializeObject<MessagesViewModel>(json);
             return viewModel;
         }
@@ -30,19 +31,19 @@ namespace ChatApp
         public void SendMessage(MessageToSend message)
         {
             var url = "API/MESSAGE";
-            SendDataToApi(message, url);
+            PostDataToApi(message, url);
         }
 
         public void Register(RegisterRequest login)
         {
             var url = "API/USER/REGISTER";
-            SendDataToApi(login, url);
+            PostDataToApi(login, url);
         }
 
         public void Login(LoginRequest login)
         {
             var url = "API/USER/Login";
-            var response = SendDataToApi(login, url);
+            var response = PostDataToApi(login, url);
             KeyHolder key = JsonConvert.DeserializeObject<KeyHolder>(response);
             CreateOrUpdateKey(key);
         }
@@ -72,7 +73,7 @@ namespace ChatApp
         {
             var url = "API/USER/Logout";
             DiscardKey();
-            SendDataToApi(null, url);
+            PostDataToApi(null, url);
         }
         private void DiscardKey()
         {
@@ -80,7 +81,7 @@ namespace ChatApp
             db.KeyHolders.Remove(key);
         }
 
-        private string SendDataToApi(object obj, string url)
+        private string PostDataToApi(object obj, string url)
         {
             try
             {
@@ -104,6 +105,43 @@ namespace ChatApp
                 throw ex;
             }
         }
+
+        public ChannelsViewModel GetChannels()
+        {
+            var url = "API/CHANNEL/user-channels";
+
+            using (HttpClient webClient = new HttpClient())
+            {
+                webClient.BaseAddress = baseUri;
+                if (ReadKeyFromDb() != null)
+                {
+                    webClient.DefaultRequestHeaders.Add("apiKey", ReadKeyFromDb().ApiKey);
+                }
+                HttpResponseMessage responseMessage = webClient.GetAsync(url).Result;
+                string json = responseMessage.Content.ReadAsStringAsync().Result;
+                var channels = JsonConvert.DeserializeObject<Models.Channel[]>(json).ToList();
+                ChannelsViewModel viewModel = new ChannelsViewModel() { Channels = channels };
+
+                return viewModel;
+            }
+
+        }
+
+        public void CreateChannel(NewChannelRequest request)
+        {
+            var url = "API/CHANNEL";
+            PostDataToApi(request,url );
+        }
+
+
+        /* string jsonResponse = SendDataToApi(request, url);
+         Channel newChannel = JsonConvert.DeserializeObject<Channel>(jsonResponse);
+         db.Channels.Add(newChannel);
+         db.SaveChanges();*/
     }
+
+
+
 }
+
 

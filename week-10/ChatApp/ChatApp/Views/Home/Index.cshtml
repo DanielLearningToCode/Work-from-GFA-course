@@ -16,9 +16,12 @@
             <br />
         </header>
         <main>
-            <div>@Html.ActionLink("Register", "Register", "Home")</div>
-            <div>@Html.ActionLink("Login", "Login", "Home")</div>
-            <div>@Html.ActionLink("Log out", "LogOut", "Home")</div>
+            <div class="row">
+                <div class="align-content-lg-start">@Html.ActionLink("Register", "Register", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Login", "Login", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Log out", "LogOut", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Channels", "Channels", "Home")</div>
+            </div>
             <div>
                 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
                 {
@@ -42,10 +45,10 @@
             @foreach (var message in Model.Messages)
             {
                 <div class="row">
-                    <div><img src="@message.Author.avatarurl" class="avatar" alt="avatar" /></div>
-                    <div>@message.Author.UserName</div>
-                    <div>@message.Created</div>
-                    <div>@message.Content</div>
+                    <div class="col"><img src="@message.Author.avatarurl" class="avatar" alt="avatar" /></div>
+                    <div class="col">@message.Author.UserName</div>
+                    <div class="col">@message.Created</div>
+                    <div class="col">@message.Content</div>
                 </div>
             }
 

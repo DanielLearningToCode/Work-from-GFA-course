@@ -65,5 +65,21 @@ namespace ChatApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpGet("Channels")]
+        public IActionResult Channels()
+        {
+            var channels = service.GetChannels();
+            return View("Channels", channels);
+        }
+
+
+        [HttpPost("CreateChannel")]
+        public IActionResult CreateChannel (NewChannelRequest request)
+        {
+            service.CreateChannel(request);
+            return RedirectToAction(nameof(Channels));
+        }
+
     }
 }

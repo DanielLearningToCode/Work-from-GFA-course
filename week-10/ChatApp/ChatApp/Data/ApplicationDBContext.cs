@@ -14,5 +14,6 @@ namespace ChatApp.Data
 
         }
         public DbSet<KeyHolder> KeyHolders { get; set; }
+        public DbSet<Channel> Channels { get; set; }
     }
 }

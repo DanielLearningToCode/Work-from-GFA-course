@@ -1,0 +1,38 @@
+﻿@model ChatApp.Models.ChannelsViewModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Channels</title>
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        @Html.ActionLink("Back to Index", "Index", "Home")
+        <h1>Channels overview</h1>
+        <div>
+            <ul>
+                @foreach (var channel in Model.Channels)
+                {
+                    <li class="row">
+                        <div>Id: @channel.Id</div>
+                        <div>Name: @channel.Name</div>
+                        <div>Description: @channel.Description</div>
+                        <div>Admin: @channel.Admin</div>
+                        <div>Secret: @channel.Secret</div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h3>Create new channel</h3>
+            @using (Html.BeginForm("CreateChannel", "Home", FormMethod.Post, new { @class = "form-group" }))
+            {
+                <input type="text" name="name" required placeholder="new channel name" class="form-control" />
+                <input type="text" name="description" placeholder="description" required class="form-control" />
+                <input type="submit" value="Create" class="btn-primary"/>
+            }
+        </div>
+    </div>
+</body>
+</html>
