@@ -8,7 +8,6 @@ namespace ChatApp.Models
     public class MessagesViewModel
     {
         public ICollection<Message> Messages { get; set; }
-        public int Count { get; set; }
 
         public MessagesViewModel()
         {

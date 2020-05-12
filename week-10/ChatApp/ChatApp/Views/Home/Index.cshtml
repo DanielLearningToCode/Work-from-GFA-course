@@ -1,5 +1,6 @@
 ﻿@model ChatApp.Models.MessagesViewModel
-
+@{ string select = "selected";
+    int[] choices = { 5, 10, 20 };}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -17,6 +18,26 @@
         <main>
             <div>@Html.ActionLink("Register", "Register", "Home")</div>
             <div>@Html.ActionLink("Login", "Login", "Home")</div>
+            <div>@Html.ActionLink("Log out", "LogOut", "Home")</div>
+            <div>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    <select name="count">
+                        @foreach (int choice in choices)
+                        {
+                            @if (choice == Model.Messages.Count)
+                            {
+                                <option value="@choice" selected="@select">@choice</option>
+                            }
+                            else
+                            {
+                                <option value="@choice">@choice</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" value="display" />
+                }
+            </div>
 
             @foreach (var message in Model.Messages)
             {

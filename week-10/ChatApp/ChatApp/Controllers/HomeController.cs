@@ -18,9 +18,9 @@ namespace ChatApp.Controllers
             this.service = service;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int count = 10)
         {
-            MessagesViewModel result = service.GetMessages().Result;
+            MessagesViewModel result = service.GetMessages(count);
             return View(result);
         }
 
@@ -56,6 +56,12 @@ namespace ChatApp.Controllers
         public IActionResult Login(LoginRequest loginRequest)
         {
             service.Login(loginRequest);
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet("LogOut")]
+        public IActionResult LogOut()
+        {
+            service.LogOut();
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,109 +1,102 @@
-﻿using ChatApp.Models;
+﻿using ChatApp.Data;
+using ChatApp.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatApp
 {
     public class WebService
     {
-        public static Uri EndPoint = new Uri(Environment.GetEnvironmentVariable("baseUrl"));
-        private static string apiKey = string.Empty;
+        private readonly ApplicationDBContext db;
+        private static Uri baseUri = new Uri(Environment.GetEnvironmentVariable("baseUrl"));
 
-        public async Task<MessagesViewModel> GetMessages()
+        public WebService(ApplicationDBContext db)
+        {
+            this.db = db;
+        }
+
+        public MessagesViewModel GetMessages(int count)
         {
             var url = "api/channel/get-messages";
-            string json = SendDataToApi(new { count = 10 }, url);
-            /*try
-            {
-                using (HttpClient webClient = new HttpClient())
-                {
-                    webClient.BaseAddress = EndPoint;
-                    string content = JsonConvert.SerializeObject(new { count = 10 });
-                    webClient.DefaultRequestHeaders.Add("apiKey", "575091af");
-                    var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await webClient.PostAsync(url, httpContent); ;
-                    string json = responseMessage.Content.ReadAsStringAsync().Result;
-                    var list = JsonConvert.DeserializeObject<MessagesViewModel>(json);
-                    return list;
-                }
-            }
-            catch (WebException ex)
-            {
-                throw ex;
-            }*/
-            MessagesViewModel model = JsonConvert.DeserializeObject<MessagesViewModel>(json);
-            return model;
+            string json = SendDataToApi(new { count = count }, url);
+            MessagesViewModel viewModel = JsonConvert.DeserializeObject<MessagesViewModel>(json);
+            return viewModel;
         }
 
         public void SendMessage(MessageToSend message)
         {
             var url = "API/MESSAGE";
             SendDataToApi(message, url);
-
-            /* using (HttpClient webClient = new HttpClient())
-             {
-                 webClient.BaseAddress = EndPoint;
-                 var url = "API/MESSAGE";
-                 webClient.DefaultRequestHeaders.Add("apiKey", "575091af");
-                 string textToSend = JsonConvert.SerializeObject(new { content = message });
-                 HttpContent content = new StringContent(textToSend, Encoding.UTF8, "application/json");
-                 HttpResponseMessage responseMessage = webClient.PostAsync(url, content).Result;
-                 string json = responseMessage.Content.ReadAsStringAsync().Result;
-                 Message sentMessage = JsonConvert.DeserializeObject<Message>(json);
-                 return sentMessage;
-             }*/
         }
 
         public void Register(RegisterRequest login)
         {
             var url = "API/USER/REGISTER";
             SendDataToApi(login, url);
-            /* using (HttpClient webClient = new HttpClient())
-             {
-                 //webClient.DefaultRequestHeaders.Add("apiKey", "575091af");
-                 webClient.BaseAddress = EndPoint;
-                 string textToSend = JsonConvert.SerializeObject(login);
-                 HttpContent content = new StringContent(textToSend, Encoding.UTF8, "application/json");
-                 HttpResponseMessage responseMessage = webClient.PostAsync(url, content).Result;
-                 string json = responseMessage.Content.ReadAsStringAsync().Result;
-                 RegisterResponse registerResponse = JsonConvert.DeserializeObject<RegisterResponse>(json);
-                 return registerResponse;
-             }*/
         }
 
         public void Login(LoginRequest login)
         {
             var url = "API/USER/Login";
             var response = SendDataToApi(login, url);
-            Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
-            dict.TryGetValue("apiKey", out string key);
-            apiKey = key;
+            KeyHolder key = JsonConvert.DeserializeObject<KeyHolder>(response);
+            CreateOrUpdateKey(key);
         }
 
-        public string SendDataToApi(object obj, string url)
+        private void CreateOrUpdateKey(KeyHolder key)
+        {
+            if (db.KeyHolders.Any())
+            {
+                var oldOne = db.KeyHolders.ToList().LastOrDefault();
+                oldOne.ApiKey = key.ApiKey;
+                db.KeyHolders.Update(oldOne);
+                db.SaveChanges();
+            }
+            else
+            {
+                db.KeyHolders.Add(key);
+                db.SaveChanges();
+            }
+        }
+
+        private KeyHolder ReadKeyFromDb()
+        {
+            return db.KeyHolders.ToList().LastOrDefault();
+        }
+
+        public void LogOut()
+        {
+            var url = "API/USER/Logout";
+            DiscardKey();
+            SendDataToApi(null, url);
+        }
+        private void DiscardKey()
+        {
+            var key = db.KeyHolders.ToList().LastOrDefault();
+            db.KeyHolders.Remove(key);
+        }
+
+        private string SendDataToApi(object obj, string url)
         {
             try
             {
                 using (HttpClient webClient = new HttpClient())
                 {
-                    webClient.BaseAddress = EndPoint;
+                    webClient.BaseAddress = baseUri;
                     string textToSend = JsonConvert.SerializeObject(obj);
                     HttpContent content = new StringContent(textToSend, Encoding.UTF8, "application/json");
-                    if (!string.IsNullOrEmpty(apiKey))
+
+                    if (ReadKeyFromDb() != null)
                     {
-                        webClient.DefaultRequestHeaders.Add("apiKey", apiKey);
+                        webClient.DefaultRequestHeaders.Add("apiKey", ReadKeyFromDb().ApiKey);
                     }
                     HttpResponseMessage responseMessage = webClient.PostAsync(url, content).Result;
                     string json = responseMessage.Content.ReadAsStringAsync().Result;
                     return json;
-                    //RegisterResponse registerResponse = JsonConvert.DeserializeObject<RegisterResponse>(json);
-                    //return registerResponse;
                 }
             }
             catch (WebException ex)
