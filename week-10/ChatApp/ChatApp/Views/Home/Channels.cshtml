@@ -14,13 +14,19 @@
             <ul>
                 @foreach (var channel in Model.Channels)
                 {
-                    <li class="row">
+                <li class="row">
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
                         <div>Id: @channel.Id</div>
                         <div>Name: @channel.Name</div>
                         <div>Description: @channel.Description</div>
                         <div>Admin: @channel.Admin</div>
                         <div>Secret: @channel.Secret</div>
-                    </li>
+                        <input type="hidden" name="channelId" value="@channel.Id" />
+                        <input type="hidden" name="channelSecret" value="@channel.Secret" />
+                        <input type="submit" value="Choose this channel" class="btn btn-outline-primary" />
+                    }
+                </li>
                 }
             </ul>
         </div>

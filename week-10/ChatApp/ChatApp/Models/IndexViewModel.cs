@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Models
 {
-    public class MessagesViewModel
+    public class IndexViewModel
     {
-        public ICollection<Message> Messages { get; set; }
-
-        public MessagesViewModel()
+        public List<Message> Messages { get; set; }
+        public Channel Channel { get; set; }
+        public IndexViewModel()
         {
             Messages = new List<Message>();
         }

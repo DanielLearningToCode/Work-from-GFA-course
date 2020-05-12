@@ -10,6 +10,7 @@ namespace ChatApp.Models
         public string Content { get; set; }
         public DateTime Created { get; set; }
         public Author Author { get; set; }
+        public Channel Channel { get; set; }
 
     }
 }

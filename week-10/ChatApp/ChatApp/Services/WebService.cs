@@ -21,10 +21,10 @@ namespace ChatApp
             this.db = db;
         }
 
-        public MessagesViewModel GetMessages(int count)
+        public IndexViewModel GetAllMessages(RequestMessages request)
         {
             string url = "api/channel/get-messages";
-            return PostDataToApi<MessagesViewModel, object>(new { count = count }, url);
+            return PostDataToApi<IndexViewModel, RequestMessages>(request, url);
         }
 
         public void SendMessage(MessageToSend message)

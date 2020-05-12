@@ -10,7 +10,6 @@ namespace ChatApp.Controllers
 {
     public class HomeController : Controller
     {
-
         private readonly WebService service;
 
         public HomeController(WebService service)
@@ -18,10 +17,14 @@ namespace ChatApp.Controllers
             this.service = service;
         }
 
-        public IActionResult Index(int count = 10)
+        public IActionResult Index(RequestMessages request)
         {
-            MessagesViewModel result = service.GetMessages(count);
-            return View(result);
+            //request.Count = count;
+            /*if (ModelState.IsValid)
+            {
+
+            }*/
+            return View(service.GetAllMessages(request));
         }
 
         [HttpPost("send")]
@@ -34,14 +37,12 @@ namespace ChatApp.Controllers
         [HttpGet("Register")]
         public IActionResult Register()
         {
-
             return View();
         }
 
         [HttpPost("Register")]
         public IActionResult Register([FromForm] RegisterRequest register)
         {
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -51,13 +52,13 @@ namespace ChatApp.Controllers
             return View();
         }
 
-
         [HttpPost("Login")]
         public IActionResult Login(LoginRequest loginRequest)
         {
             service.Login(loginRequest);
             return RedirectToAction(nameof(Index));
         }
+
         [HttpGet("LogOut")]
         public IActionResult LogOut()
         {
@@ -65,14 +66,11 @@ namespace ChatApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet("Channels")]
         public IActionResult Channels()
         {
-            var channels = service.GetChannels();
-            return View("Channels", channels);
+            return View("Channels", service.GetChannels());
         }
-
 
         [HttpPost("CreateChannel")]
         public IActionResult CreateChannel (NewChannelRequest request)
@@ -80,6 +78,5 @@ namespace ChatApp.Controllers
             service.CreateChannel(request);
             return RedirectToAction(nameof(Channels));
         }
-
     }
 }
