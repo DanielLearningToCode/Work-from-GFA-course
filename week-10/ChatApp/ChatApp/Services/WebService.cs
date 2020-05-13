@@ -1,5 +1,6 @@
 ﻿using ChatApp.Data;
 using ChatApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -28,9 +29,15 @@ namespace ChatApp
 
             if (request.ChannelId != null)
             {
-            string secret = GetChannelSecretFromDb(result.Channel.Id);
-            result.Channel.Secret = secret;
+                string secret = GetChannelSecretFromDb(result.Channel.Id);
+                result.Channel.Secret = secret;
             }
+            if (ReadKeyFromDb() != null)
+            {
+                var channels = GetChannels();
+                result.Channels = channels.Channels.ToList();
+            }
+            result.Count = request.Count;
             return result;
         }
 
@@ -66,8 +73,13 @@ namespace ChatApp
         }
         private void DiscardKey()
         {
-            var key = db.KeyHolders.ToList().LastOrDefault();
+            if (ReadKeyFromDb() == null)
+            {
+                return;
+            }
+            var key = db.KeyHolders.FirstOrDefault();
             db.KeyHolders.Remove(key);
+            db.SaveChanges();
         }
 
         private TResponseType PostDataToApi<TResponseType, TRequestType>(TRequestType input, string url)
@@ -97,7 +109,7 @@ namespace ChatApp
         public ChannelsViewModel GetChannels()
         {
             string url = "API/CHANNEL/user-channels";
-            var channels = GetDataFromApi<Models.Channel[]>(url).ToList();
+            var channels = GetDataFromApi<Models.Channel[]>(url)?.ToList();
             foreach (var channel in channels)
             {
                 if (!IsInDB(channel))
@@ -106,12 +118,18 @@ namespace ChatApp
                     db.SaveChanges();
                 }
             }
+            channels.Add(InitializeGeneralChannel());
             return new ChannelsViewModel() { Channels = channels };
+        }
+
+        private Models.Channel InitializeGeneralChannel()
+        {
+            return new Models.Channel() { Id = 1, Name = "General", Iconurl = "http://www.mocr.army.cz/assets/struktura/generalni/ngs/armadni-general-ales-opata_4.jpg" };
         }
 
         public string GetChannelSecretFromDb(int channelID)
         {
-            return db.Channels.FirstOrDefault(c => c.Id == channelID).Secret;
+            return db.Channels.FirstOrDefault(c => c.Id == channelID)?.Secret;
         }
 
         private bool IsInDB(Models.Channel channel)

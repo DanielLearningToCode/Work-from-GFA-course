@@ -1,72 +1,90 @@
 ﻿@model ChatApp.Models.IndexViewModel
 @{ string select = "selected";
     int[] choices = { 5, 10, 20, 40 };
-    }
-    <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Rascal Chat</title>
-        <link href="~/StyleSheet.css" rel="stylesheet" />
-        <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <h1>Rascal chat client</h1>
-                <img src="https://cdn.drawception.com/images/avatars/628711-EFE.png" alt="avatar" class="avatar" /><br />
-                <br />
-                <div><p>Current channel: @Model.Channel?.Name</p></div>
-                <div>
-
-                </div>
-            </header>
-            <main>
-                <div class="row">
-                    <div class="align-content-lg-start">@Html.ActionLink("Register", "Register", "Home")</div>
-                    <div class="align-content-lg-start">@Html.ActionLink("Login", "Login", "Home")</div>
-                    <div class="align-content-lg-start">@Html.ActionLink("Log out", "LogOut", "Home")</div>
-                    <div class="align-content-lg-start">@Html.ActionLink("Channels", "GetChannels", "Home")</div>
-                </div>
-                <div>
-                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-                    {
-                        <select name="count">
-                            @foreach (int choice in choices)
-                            {
-                                @if (choice == Model.Messages.Count)
-                                {
-                                    <option value="@choice" selected="@select">@choice</option>
-                                }
-                                else
-                                {
-                                    <option value="@choice">@choice</option>
-                                }
-                            }
-                        </select>
-                        <input type="submit" value="display" />
-                    }
-                </div>
-
-                @foreach (var message in Model.Messages)
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rascal Chat</title>
+    <link href="~/StyleSheet.css" rel="stylesheet" />
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rascal chat client</h1>
+            <img src="https://cdn.drawception.com/images/avatars/628711-EFE.png" alt="avatar" class="avatar" /><br />
+            <br />
+            <div><p>Current channel: @Model.Channel?.Name</p></div>
+            <div>
+                @foreach (var channel in Model.Channels)
                 {
-                    <div class="row">
-                        <div class="col"><img src="@message.Author.Avatarurl" class="avatar" alt="avatar" title="@message.Author.UserName" /></div>
-                        <div class="col">@message.Author.UserName</div>
-                        <div class="col">@message.Created.ToLocalTime()</div>
-                        <div class="col">@message.Content</div>
+                    <div>
+                        <p> 
+                            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                            {
+                                <input type="hidden" name="ChannelId" value="@channel?.Id" />
+                                <input type="hidden" name="ChannelSecret" value="@channel?.Secret" />
+                                <input type="image" style="width: 96px; height: auto"  src="@channel.Iconurl" alt="@channel.Name" title="@channel.Name" />
+                                
+                            }
+                        </p>
                     </div>
                 }
 
-                <div>
-                    @using (Html.BeginForm("Send", "Home", FormMethod.Post))
-                    {
-                        <input type="hidden" name="ChannelId" value="@Model?.Channel?.Id" />
-                        <input type="hidden" name="ChannelSecret" value="@Model?.Channel?.Secret" />
-                        <input type="text" name="content" required placeholder="Put your message here" />
-                        <input type="submit" value="send" />
-                    }
+            </div>
+
+        </header>
+        <main>
+            <div class="row">
+                <div class="align-content-lg-start">@Html.ActionLink("Register", "Register", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Login", "Login", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Log out", "LogOut", "Home")</div>
+                <div class="align-content-lg-start">@Html.ActionLink("Channels", "GetChannels", "Home")</div>
+            </div>
+            <div>
+                
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                {
+                    <select name="count">
+                        @foreach (int choice in choices)
+                        {
+                            @if (choice == Model.Count)
+                            {
+                                <option value="@choice" selected="@select">@choice</option>
+                            }
+                            else
+                            {
+                                <option value="@choice">@choice</option>
+                            }
+                        }
+                    </select>
+                    <input type="hidden" name="ChannelId" value="@Model?.Channel?.Id" />
+                    <input type="hidden" name="ChannelSecret" value="@Model?.Channel?.Secret" />
+                    <input type="submit" value="display" />
+                }
+            </div>
+
+            @foreach (var message in Model.Messages)
+            {
+                <div class="row">
+                    <div class="col"><img src="@message.Author.Avatarurl" class="avatar" alt="avatar" title="@message.Author.UserName" /></div>
+                    <div class="col">@message.Author.UserName</div>
+                    <div class="col">@message.Created.ToLocalTime()</div>
+                    <div class="col">@message.Content</div>
                 </div>
-            </main>
-        </div>
-    </body>
+            }
+
+            <div>
+                @using (Html.BeginForm("Send", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="ChannelId" value="@Model?.Channel?.Id" />
+                    <input type="hidden" name="ChannelSecret" value="@Model?.Channel?.Secret" />
+                    <input type="text" name="content" required placeholder="Put your message here" />
+                    <input type="submit" value="send" />
+                }
+            </div>
+        </main>
+    </div>
+</body>
 </html>

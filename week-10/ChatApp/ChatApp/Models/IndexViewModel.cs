@@ -9,9 +9,14 @@ namespace ChatApp.Models
     {
         public List<Message> Messages { get; set; }
         public Channel Channel { get; set; }
+        public int Count { get; set; }
+        public bool LogInSuccess { get; set; }
+
+        public List<Channel> Channels { get; set; }
         public IndexViewModel()
         {
             Messages = new List<Message>();
+            Channels = new List<Channel>();
         }
     }
 }
