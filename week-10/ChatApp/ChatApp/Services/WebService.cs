@@ -21,10 +21,17 @@ namespace ChatApp
             this.db = db;
         }
 
-        public IndexViewModel GetAllMessages(RequestMessages request)
+        public IndexViewModel GetMessages(RequestMessages request)
         {
             string url = "api/channel/get-messages";
-            return PostDataToApi<IndexViewModel, RequestMessages>(request, url);
+            var result = PostDataToApi<IndexViewModel, RequestMessages>(request, url);
+
+            if (request.ChannelId != null)
+            {
+            string secret = GetChannelSecretFromDb(result.Channel.Id);
+            result.Channel.Secret = secret;
+            }
+            return result;
         }
 
         public void SendMessage(MessageToSend message)
@@ -91,7 +98,25 @@ namespace ChatApp
         {
             string url = "API/CHANNEL/user-channels";
             var channels = GetDataFromApi<Models.Channel[]>(url).ToList();
+            foreach (var channel in channels)
+            {
+                if (!IsInDB(channel))
+                {
+                    db.Channels.Add(channel);
+                    db.SaveChanges();
+                }
+            }
             return new ChannelsViewModel() { Channels = channels };
+        }
+
+        public string GetChannelSecretFromDb(int channelID)
+        {
+            return db.Channels.FirstOrDefault(c => c.Id == channelID).Secret;
+        }
+
+        private bool IsInDB(Models.Channel channel)
+        {
+            return db.Channels.Any(c => c.Id == channel.Id);
         }
 
         private TReturnType GetDataFromApi<TReturnType>(string url)

@@ -12,12 +12,11 @@
         <h1>Channels overview</h1>
         <div>
             <ul>
-                @foreach (var channel in Model.Channels)
-                {
+           
                 <li class="row">
                     @using (Html.BeginForm("Index", "Home", FormMethod.Post))
                     {
-                        <div>Id: @channel.Id</div>
+                        <div>Id: </div>
                         <div>Name: @channel.Name</div>
                         <div>Description: @channel.Description</div>
                         <div>Admin: @channel.Admin</div>

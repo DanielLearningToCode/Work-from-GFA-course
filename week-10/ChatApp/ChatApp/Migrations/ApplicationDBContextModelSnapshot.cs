@@ -18,6 +18,36 @@ namespace ChatApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ChatApp.Models.Channel", b =>
+                {
+                    b.Property<int>("ChannelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Admin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Iconurl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Secret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ChannelId");
+
+                    b.ToTable("Channels");
+                });
+
             modelBuilder.Entity("ChatApp.Models.KeyHolder", b =>
                 {
                     b.Property<int>("Id")

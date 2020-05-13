@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatApp.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20200512113928_channels")]
-    partial class channels
+    [Migration("20200513085034_newDatabase2")]
+    partial class newDatabase2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace ChatApp.Migrations
 
             modelBuilder.Entity("ChatApp.Models.Channel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ChannelId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -33,13 +33,19 @@ namespace ChatApp.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Iconurl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Secret")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ChannelId");
 
                     b.ToTable("Channels");
                 });

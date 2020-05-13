@@ -19,19 +19,14 @@ namespace ChatApp.Controllers
 
         public IActionResult Index(RequestMessages request)
         {
-            //request.Count = count;
-            /*if (ModelState.IsValid)
-            {
-
-            }*/
-            return View(service.GetAllMessages(request));
+            return View(service.GetMessages(request));
         }
 
         [HttpPost("send")]
         public IActionResult Send(MessageToSend message)
         {
             service.SendMessage(message);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new RequestMessages() { ChannelId = message.ChannelId, ChannelSecret = message.ChannelSecret });
         }
 
         [HttpGet("Register")]
@@ -66,8 +61,8 @@ namespace ChatApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("Channels")]
-        public IActionResult Channels()
+        [HttpGet("GetChannels")]
+        public IActionResult GetChannels()
         {
             return View("Channels", service.GetChannels());
         }
@@ -76,7 +71,7 @@ namespace ChatApp.Controllers
         public IActionResult CreateChannel (NewChannelRequest request)
         {
             service.CreateChannel(request);
-            return RedirectToAction(nameof(Channels));
+            return RedirectToAction(nameof(GetChannels));
         }
     }
 }
