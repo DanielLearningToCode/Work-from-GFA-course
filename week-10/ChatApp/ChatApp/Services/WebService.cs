@@ -173,6 +173,7 @@ namespace ChatApp
                 db.SaveChanges();
             }
         }
+       
     }
 }
 

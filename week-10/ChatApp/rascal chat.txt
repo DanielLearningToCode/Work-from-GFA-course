@@ -1,0 +1,11 @@
+{
+  "login": "Dan",
+  "password": youwouldneverguess
+}
+
+
+response
+{
+    "username": "Dan",
+    "userId": 8
+}
