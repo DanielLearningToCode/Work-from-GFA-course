@@ -29,9 +29,10 @@ public class Main {
 
     }
 
-    public static HashMap<Character, Long> GetTwoMostFrequentChars(String path) throws IOException {
+    public static HashMap<Character, Integer> GetTwoMostFrequentChars(String path) throws IOException {
         String text = "";
-        HashMap<Character, Long> result = new HashMap<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap<Character, Integer> result = new HashMap<>();
         try {
             text = new String(Files.readAllBytes(Paths.get(path)));
         } catch (IOException e) {
@@ -39,14 +40,36 @@ public class Main {
         }
         // IntStream chars = text.chars();
         //char[] charss = chars.str
-        Stream<Character> characterStream = text.chars().mapToObj(c -> (char) c);
-        var unsortedHashMap = (HashMap<Character, Long>) characterStream.collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().sorted(x -> x.getValue());
-        List<Long> list = (ArrayList<Long>) unsortedHashMap.values();
-        Collections.sort(list);
+        //Stream<Character> characterStream = text.chars().mapToObj(c -> (char) c);
+        // var unsortedHashMap = (HashMap<Character, Integer>) characterStream.collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().sorted(x -> x.getValue());
+        // List<Long> list = (ArrayList<Long>) unsortedHashMap.values();
+        //Collections.sort(list);
+        var arr = text.toCharArray();
+        for (char character : arr
+        ) {
+            if (map.containsKey(character)) {
+                map.put(character, map.get(character) + 1);
+            } else {
+                map.put(character, 1);
+            }
+        }
+
+        Map.Entry<Character, Integer> mostFrequent = null;
+
+        for (int count = 0; count < 2; count++) {
+            int biggestNum = 0;
+            for (var character : map.entrySet()
+            ) {
+                if (biggestNum < character.getValue()) {
+                    biggestNum = character.getValue();
+                    mostFrequent = character;
+                }
+            }
+            result.put(mostFrequent.getKey(), mostFrequent.getValue());
+            map.remove(mostFrequent.getKey());
+        }
         return result;
     }
-
-
     public static boolean isSymmetric(int[][] input) {
         for (int row = 0; row < input.length; row++) {
             for (int column = 0; column < input[row].length; column++) {
