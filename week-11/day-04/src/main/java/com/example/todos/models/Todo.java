@@ -1,23 +1,21 @@
 package com.example.todos.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
 public class Todo {
 
     @Column
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long id;
     @Column
-    private String title;
+    public String title;
     @Column
-    private boolean urgent;
+    public boolean urgent;
     @Column
-    private boolean done;
+    public boolean done;
 
     public Todo() {}
 
