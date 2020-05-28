@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 
-@Qualifier("Service")
-@Component
+@Qualifier("ServiceOne")
+@org.springframework.stereotype.Service
 public class Service implements ServicesInterface {
 
-    public String print(String text){
+    public String print(String text) {
         return text + "from service";
     }
 }
