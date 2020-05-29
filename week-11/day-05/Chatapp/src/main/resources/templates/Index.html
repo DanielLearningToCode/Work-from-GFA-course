@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-<table>
+<div style="text-align: center;"><h1 class="h1">Java Chat app</h1></div>
+<table class="table table-hover">
     <thead>
     <tr>
-        <th> Content </th>
-        <th> Created </th>
+        <th scope="col"> Content</th>
+        <th scope="col"> Created</th>
+        <th scope="col"> Author</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="message : ${messages.messages}">
-        <td><span th:text="${message.content}"> Title </span></td>
-        <td><span th:text="${message.created}"> Author </span></td>
+        <td><span th:text="${message.content}"></span></td>
+        <td><span th:text="${message.created}"></span></td>
+        <td><span th:text="${message.author.username}"></span></td>
     </tr>
     </tbody>
+    <form action="#" th:action="@{/}" th:object="${}" method="post">
+        <p>Id: <input type="text" th:field="*{}" /></p>
+        <p>Message: <input type="text" th:field="*{}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
 </table>
-
-
-<p>my text</p>
 </body>
 </html>

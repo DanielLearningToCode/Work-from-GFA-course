@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.swing.text.View;
 import java.io.IOException;
@@ -29,6 +30,8 @@ public class ChatController {
         model.addAttribute("messages", service.sendPost());
 
         return "Index";
-
     }
+
+   /* @PostMapping("/")
+    public String newMessage(@)*/
 }

@@ -1,7 +1,6 @@
 package gf.chatapp.Models;
 
 public class channel {
-
     public int id;
     public String name;
     public String description;

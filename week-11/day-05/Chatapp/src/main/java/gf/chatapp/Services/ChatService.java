@@ -48,7 +48,6 @@ public class ChatService {
         String responseBody = response.body();
         IndexViewModel model = mapper.readValue(responseBody, IndexViewModel.class);
         return model;
-
     }
 
 

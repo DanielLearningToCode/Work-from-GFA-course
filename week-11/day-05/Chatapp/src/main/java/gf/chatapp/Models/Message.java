@@ -6,6 +6,4 @@ public class Message {
     public String content;
     public Date created ;
     public Author author;
-
-
 }
