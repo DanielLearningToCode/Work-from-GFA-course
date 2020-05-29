@@ -2,6 +2,7 @@ package com.example.todos.controllers;
 
 import com.example.todos.models.Todo;
 import com.example.todos.repositories.ToDoRepository;
+import com.example.todos.services.TodoService;
 import net.bytebuddy.asm.Advice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,40 +17,48 @@ import java.util.List;
 @RestController
 public class TodoController {
 
-    private ToDoRepository repo;
+    private TodoService service;
 
-    public TodoController(ToDoRepository repo) {
-        this.repo = repo;
+    public TodoController(TodoService service) {
+        this.service = service;
     }
 
     @GetMapping("/")
-    //@ResponseBody
+    //@ResponseBody   converts output to JSON. Restcontroller does by default
+    // alternativa - @PostMapping(value = "/content", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Todo>> List() {
-        var result = repo.findAll();
+        var result = service.getAll();
         return ResponseEntity.status(200).body(result);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Todo> getById(@PathVariable long id) {
-        return ResponseEntity.status(200).body(repo.findById(id).get());
+        return ResponseEntity.status(200).body(service.getById(id));
     }
 
     @PostMapping("/")
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
-        repo.save(todo);
+        service.create(todo);
         return ResponseEntity.status(201).body(todo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> update(@PathVariable long id, @RequestBody Todo todo) {
-        todo.id = id;
-        repo.save(todo);
+    public ResponseEntity update(@PathVariable long id, @RequestBody Todo todo) {
+        if (!service.exists(id)) {
+            //var objResult = new Object() {String message = "The provided id does not exists in the database";}; nefunguje, vraci 500
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("id not found");
+        }
+        todo = service.update(todo, id);
         return ResponseEntity.status(200).body(todo);
     }
 
     @DeleteMapping("/{id}")
+    //misto responseEntity lze poslat responseTransfer
     public ResponseEntity delete(@PathVariable long id) {
-        repo.deleteById(id);
-        return ResponseEntity.status(200).body("");
+        if (!service.exists(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        service.delete(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
