@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Chat App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <div style="text-align: center;"><h1 class="h1">Java Chat app</h1></div>
+<a th:href="@{/submit}">new message</a>
 <table class="table table-hover">
     <thead>
     <tr>
@@ -23,11 +24,7 @@
         <td><span th:text="${message.author.username}"></span></td>
     </tr>
     </tbody>
-    <form action="#" th:action="@{/}" th:object="${}" method="post">
-        <p>Id: <input type="text" th:field="*{}" /></p>
-        <p>Message: <input type="text" th:field="*{}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+
 </table>
 </body>
 </html>

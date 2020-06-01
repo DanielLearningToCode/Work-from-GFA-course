@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gf.chatapp.Models.GetMessages;
 import gf.chatapp.Models.IndexViewModel;
 import gf.chatapp.Models.Message;
+import gf.chatapp.Models.MessageRequest;
 import org.springframework.http.HttpMethod;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.concurrent.Flow;
 public class ChatService {
 
     public static String getAddress = "https://rascals-chat.herokuapp.com/API/CHANNEL/Get-messages";
+    public static String newMessageAddress = "https://rascals-chat.herokuapp.com/API/MESSAGE";
 
     HttpClient client = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
@@ -42,12 +44,30 @@ public class ChatService {
         HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(bodyString);
         HttpRequest request = HttpRequest.newBuilder().POST(body).
                 uri(URI.create(getAddress)).timeout(Duration.ofSeconds(30)).
-                header("apiKey", "73a71e33").header("Content-Type", "application/json").build();
+                header("apiKey", "a305eaea").header("Content-Type", "application/json").build();
 
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
         String responseBody = response.body();
         IndexViewModel model = mapper.readValue(responseBody, IndexViewModel.class);
         return model;
+    }
+
+    public void sendMessage(String message) throws IOException, InterruptedException {
+        //StringBuilder builder = new StringBuilder();
+        //builder.append();
+        ObjectMapper mapper = new ObjectMapper();
+        //GetMessages getMessages = new GetMessages();
+        MessageRequest newMessage = new MessageRequest();
+        newMessage.content = message;
+        String bodyString = mapper.writeValueAsString(newMessage);
+        HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(bodyString);
+        HttpRequest request = HttpRequest.newBuilder().POST(body).
+                uri(URI.create(newMessageAddress)).timeout(Duration.ofSeconds(30)).
+                header("apiKey", "a305eaea").header("Content-Type", "application/json").build();
+
+        HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
+        String responseBody = response.body();
+
     }
 
 
