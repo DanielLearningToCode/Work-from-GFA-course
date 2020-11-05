@@ -1,4 +1,4 @@
-# DanielLearningToCode
+# This repository contains work done during the Green fox academy course. Exclusive the work on team projects, written in Java.
 [Excerise on my private repo](https://github.com/DanielLearningToCode/patchwork.git)
 
 [Class Sylabus](https://github.com/green-fox-academy/vetulus-cs-prg-syllabus.git)
