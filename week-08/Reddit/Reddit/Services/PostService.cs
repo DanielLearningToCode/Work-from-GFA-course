@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Reddit.Context;
 using Reddit.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Reddit.Services
 {
@@ -14,7 +12,7 @@ namespace Reddit.Services
         private ApplicationDBContext db;
      
         public delegate List<Post> SortingDelegate();
-        public SortingDelegate GetSortedPosts;
+       // public SortingDelegate GetSortedPosts;
         public PostService(ApplicationDBContext db)
         {
             this.db = db;
@@ -22,11 +20,14 @@ namespace Reddit.Services
 
         public SortingDelegate SelectSorting(bool sortByDate)
         {
-            if (sortByDate)
-            {
-                return GetSortedPosts = SortByDate;
-            }
-             return GetSortedPosts = SortByVotes;
+            /*    if (sortByDate)
+                {
+                    return GetSortedPosts = SortByDate;
+                }
+                 return GetSortedPosts = SortByVotes;
+            */
+            return sortByDate ? new SortingDelegate(SortByDate) : new SortingDelegate(SortByVotes);
+                
         }
 
         public List<Post> SortByDate()
@@ -54,8 +55,8 @@ namespace Reddit.Services
         public List<Post> GetNextPosts(int page, out int pageCount, bool sortByDate, int postsPerPage)
         {
             List<Post> result = new List<Post>();
-            GetSortedPosts = SelectSorting(sortByDate);
-            List<Post> posts = GetSortedPosts();
+            //GetSortedPosts = SelectSorting(sortByDate);
+            List<Post> posts = SelectSorting(sortByDate)();
             int postCount = posts.Count;
             
             int remainingPosts = postCount - page * postsPerPage;
@@ -65,6 +66,12 @@ namespace Reddit.Services
             result = posts.Skip(skip).Take(take).ToList();
             return result;
         }
+
+        internal void FilterByUser(string author)
+        {
+            throw new NotImplementedException();
+        }
+
         public IndexViewModel CreateViewModel(int page, bool sortByDate, int postsPerPage)
         {
             List<Post> posts = GetNextPosts(page, out int pageCount, sortByDate, postsPerPage);

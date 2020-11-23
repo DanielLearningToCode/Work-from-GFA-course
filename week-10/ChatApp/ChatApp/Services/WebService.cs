@@ -1,14 +1,12 @@
 ﻿using ChatApp.Data;
 using ChatApp.Models;
-using Microsoft.AspNetCore.Mvc;
+using ChatApp.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Threading.Channels;
 
 namespace ChatApp
 {
@@ -122,9 +120,9 @@ namespace ChatApp
             return new ChannelsViewModel() { Channels = channels };
         }
 
-        private Models.Channel InitializeGeneralChannel()
+        private Channel InitializeGeneralChannel()
         {
-            return new Models.Channel() { Id = 1, Name = "General", Iconurl = "http://www.mocr.army.cz/assets/struktura/generalni/ngs/armadni-general-ales-opata_4.jpg" };
+            return new Channel() { Id = 1, Name = "General", Iconurl = "http://www.mocr.army.cz/assets/struktura/generalni/ngs/armadni-general-ales-opata_4.jpg" };
         }
 
         public string GetChannelSecretFromDb(int channelID)
@@ -173,7 +171,6 @@ namespace ChatApp
                 db.SaveChanges();
             }
         }
-       
     }
 }
 

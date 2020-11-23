@@ -6,9 +6,9 @@
 <body>
     @using (Html.BeginForm("Register", "Home", FormMethod.Post))
     {
-        <label for="login">Login: </label>
+        <label for="login">Choose a name </label>
         <input id="login" type="text" name="login" required />
-        <label for="password">Password: </label>
+        <label for="password">Create password: </label>
         <input type="password" name="password" required />
         <input type="submit" value="send" />
     }

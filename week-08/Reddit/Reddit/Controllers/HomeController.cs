@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Reddit.Models;
 using Reddit.Services;
 
@@ -50,10 +46,10 @@ namespace Reddit.Controllers
             return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage });
         }
  
-        [HttpGet("FilterByUser")]
+        [HttpPost("FilterByUser")]
         public IActionResult FilterByUser(int page, bool sortByDate, int postsPerPage = 5, string author = "")
         {
-            //RedirectToPage()
+            postService.FilterByUser(author);
             return RedirectToAction("Index", new { page = page, sortByDate = sortByDate, postsPerPage = postsPerPage, author = author });
         }
 

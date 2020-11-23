@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace ChatApp.Controllers
 {
@@ -32,7 +30,7 @@ namespace ChatApp.Controllers
         [HttpGet("Register")]
         public IActionResult Register()
         {
-            return View();
+            return View("Register");
         }
 
         [HttpPost("Register")]

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ChatApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace ChatApp.Models
+namespace ChatApp.ViewModels
 {
     public class IndexViewModel
     {

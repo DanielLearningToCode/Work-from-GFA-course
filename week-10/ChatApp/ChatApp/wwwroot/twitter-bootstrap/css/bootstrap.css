@@ -7256,8 +7256,9 @@ button.bg-dark:focus {
 }
 
 .align-content-start {
-  -ms-flex-line-pack: start !important;
-  align-content: flex-start !important;
+    -ms-flex-line-pack: start !important;
+    align-content: flex-start !important;
+    word-spacing: 30px;
 }
 
 .align-content-end {
@@ -7682,10 +7683,11 @@ button.bg-dark:focus {
     -ms-flex-align: stretch !important;
     align-items: stretch !important;
   }
-  .align-content-lg-start {
-    -ms-flex-line-pack: start !important;
-    align-content: flex-start !important;
-  }
+    .align-content-lg-start {
+        -ms-flex-line-pack: start !important;
+        align-content: flex-start !important;
+        margin-right: 50px !important;
+    }
   .align-content-lg-end {
     -ms-flex-line-pack: end !important;
     align-content: flex-end !important;
