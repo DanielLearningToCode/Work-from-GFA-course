@@ -1,38 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Reddit.Context;
+using Reddit.Data;
 using Reddit.Models;
+using Reddit.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Reddit.Services
 {
-    public class PostService
+    public class PostService : IPostService
     {
         private ApplicationDBContext db;
 
-        public delegate IQueryable<Post> SortingDelegate(IQueryable<Post> posts);
+        private delegate IQueryable<Post> SortingDelegate(IQueryable<Post> posts);
         public PostService(ApplicationDBContext db)
         {
             this.db = db;
         }
 
-        public SortingDelegate SelectSorting(string sortBy)
+        private SortingDelegate SelectSorting(string sortBy)
         {
             return sortBy == "date" ? new SortingDelegate(SortByDate) : new SortingDelegate(SortByVotes);
         }
 
-        public IOrderedQueryable<Post> SortByDate(IQueryable<Post> posts)
+        private IOrderedQueryable<Post> SortByDate(IQueryable<Post> posts)
         {
-            return posts.OrderBy(p => p.CreatedDate);            
+            return posts.OrderByDescending(p => p.CreatedDate);
         }
 
-        public IOrderedQueryable<Post> SortByVotes(IQueryable<Post> posts)
+        private IOrderedQueryable<Post> SortByVotes(IQueryable<Post> posts)
         {
             return posts.OrderByDescending(p => p.Votes);
         }
 
-        public IQueryable<Post> GetPosts(string author)
+        private IQueryable<Post> GetPosts(string author)
         {
             return author == "-" ? db.Posts.Include(p => p.User) :
                 db.Posts.Include(p => p.User).Where(p => p.User.Name == author);
@@ -44,13 +45,13 @@ namespace Reddit.Services
             int postCount = posts.Count();
             //pagination
             page = (postCount / postsPerPage) == 0 ? 0 : page;
-            int remainingPosts = postCount - page * postsPerPage;  
+            int remainingPosts = postCount - page * postsPerPage;
             pageCount = postCount % postsPerPage > 0 ? ((postCount / postsPerPage) + 1) : (postCount / postsPerPage);
             int skip = page * postsPerPage;
             int take = remainingPosts < postsPerPage ? remainingPosts : postsPerPage;
             return posts.Skip(skip).Take(take).ToList();
         }
-       
+
         public IndexViewModel CreateViewModel(int page, string sortBy, int postsPerPage, string author = "-")
         {
             List<Post> posts = GetNextPosts(ref page, out int pageCount, sortBy, postsPerPage, author);

@@ -1,24 +1,44 @@
-﻿@model Reddit.Models.SubmitViewModel
+﻿@model Reddit.ViewModels.SubmitViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <meta name="description" content="Just practice">
+    <meta name="keywords" content="C# practice">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/FormStyle.css" rel="stylesheet" />
     <title>Submit new post</title>
 </head>
 <body>
-    <h1>Submit new post</h1>
-    @using (Html.BeginForm("SubmitNew", "Home", FormMethod.Post))
-    {<label for="Title">Title:</label>
-        <input id="title" type="text" name="title" / required><br />
-        <label for="URL">URL:</label>
-        <input id="URL" type="URL" name="URL" required /> <br />
-        <label for="name">Author: </label>
-        <select id="name" name="name" required>
-            @foreach (var name in Model.Users)
-            {
-                <option value="@name">@name</option>
+    <div class="form">
+        <h1>Submit new post</h1>
+        @using (Html.BeginForm("SubmitNew", "Home", FormMethod.Post, new { onsubmit = "return validateForm()", name = "myForm" }))
+        {
+            <div>
+                <label for="Title">Title:</label>
+                <input id="title" type="text" name="title" placeholder="enter the article's title" required><br />
+                <label for="URL">URL:</label>
+                <input id="URL" type="text" name="URL" placeholder="enter the link to the article" /> <br />
+                <label for="name">Author: </label>
+                <select id="name" name="name" required>
+                    <option value="none" selected disabled hidden>Your name</option>
+                    @foreach (var name in Model.Users)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        }
+    </div>
+    <script>
+        function validateForm() {
+            let input = document.forms["myForm"]["URL"].value;
+            let pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@@!\$&'\(\)\*\+,;=.]+$/gm
+            if (!pattern.test(input)) {
+                alert("Enter a valid URL");
+                return false;
             }
-        </select>
-        <input type="submit" value="Submit" />
-    }
+        }
+    </script>
 </body>
 </html>

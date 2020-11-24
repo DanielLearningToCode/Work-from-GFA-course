@@ -1,7 +1,14 @@
-﻿body {
-}
-
-.info {
+﻿.info {
     display:inline-flex;
     justify-content:flex-start;
 }
+
+.center-content {
+    width: 60%;
+    margin: auto;
+}
+
+
+
+
+
