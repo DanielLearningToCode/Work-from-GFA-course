@@ -15,12 +15,6 @@ namespace ChatApp.Data
             
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-           //modelBuilder.Entity<Channel>().Property(c => c.Id)
-           // .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-        }
-
         public DbSet<KeyHolder> KeyHolders { get; set; }
         public DbSet<Channel> Channels { get; set; }
     }

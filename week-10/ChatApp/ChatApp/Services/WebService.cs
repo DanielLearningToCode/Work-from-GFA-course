@@ -1,4 +1,5 @@
 ﻿using ChatApp.Data;
+using ChatApp.DTO;
 using ChatApp.Models;
 using ChatApp.ViewModels;
 using Newtonsoft.Json;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace ChatApp
 {
-    public class WebService
+    public class WebService : IWebService
     {
         private readonly ApplicationDBContext db;
         private static Uri baseUri = new Uri(Environment.GetEnvironmentVariable("baseUrl"));
@@ -25,11 +26,13 @@ namespace ChatApp
             string url = "api/channel/get-messages";
             var result = PostDataToApi<IndexViewModel, RequestMessages>(request, url);
 
+            //if channel is not general channel with no id, then fetch the secret from DB and add it to ViewModel
             if (request.ChannelId != null)
             {
                 string secret = GetChannelSecretFromDb(result.Channel.Id);
                 result.Channel.Secret = secret;
             }
+            // fetch all your channels from DB and add it to ViewModel
             if (ReadKeyFromDb() != null)
             {
                 var channels = GetChannels();
@@ -42,13 +45,13 @@ namespace ChatApp
         public void SendMessage(MessageToSend message)
         {
             string url = "API/MESSAGE";
-            PostDataToApi<object, MessageToSend>(message, url);
+            PostDataToApi<bool, MessageToSend>(message, url);
         }
 
         public void Register(RegisterRequest login)
         {
             string url = "API/USER/REGISTER";
-            PostDataToApi<object, RegisterRequest>(login, url);
+            PostDataToApi<bool, RegisterRequest>(login, url);
         }
 
         public void Login(LoginRequest login)
@@ -100,6 +103,7 @@ namespace ChatApp
             }
             catch (WebException ex)
             {
+                // TODO: handle connection errors
                 throw ex;
             }
         }
@@ -107,7 +111,11 @@ namespace ChatApp
         public ChannelsViewModel GetChannels()
         {
             string url = "API/CHANNEL/user-channels";
-            var channels = GetDataFromApi<Models.Channel[]>(url)?.ToList();
+            var channels = GetDataFromApi<Channel[]>(url)?.ToList();
+            if (channels == null)
+            {
+                return new ChannelsViewModel();
+            }
             foreach (var channel in channels)
             {
                 if (!IsInDB(channel))
@@ -130,7 +138,7 @@ namespace ChatApp
             return db.Channels.FirstOrDefault(c => c.Id == channelID)?.Secret;
         }
 
-        private bool IsInDB(Models.Channel channel)
+        private bool IsInDB(Channel channel)
         {
             return db.Channels.Any(c => c.Id == channel.Id);
         }

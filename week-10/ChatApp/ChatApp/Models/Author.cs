@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ChatApp.Models
+﻿namespace ChatApp.Models
 {
     public class Author
     {
@@ -13,9 +8,9 @@ namespace ChatApp.Models
 
         public string Avatarurl
         {
-            get 
-            { 
-                return avatarUrl; 
+            get
+            {
+                return avatarUrl;
             }
             set
             {

@@ -30,8 +30,7 @@ namespace ChatApp
             Environment.GetEnvironmentVariable("baseURL");
             services.AddDbContext<ApplicationDBContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<WebService>();
-
+            services.AddTransient<IWebService, WebService>();
             services.AddMvc();
         }
 

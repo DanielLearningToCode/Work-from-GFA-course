@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ChatApp;
+using ChatApp.DTO;
+using ChatApp.Models;
 
-namespace ChatApp.Models
+namespace ChatApp.DTO
 {
     public class MessageToSend
     {

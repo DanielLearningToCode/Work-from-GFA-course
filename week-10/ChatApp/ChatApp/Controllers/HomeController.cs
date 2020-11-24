@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChatApp.DTO;
 using ChatApp.Models;
+using ChatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly WebService service;
+        private readonly IWebService service;
 
-        public HomeController(WebService service)
+        public HomeController(IWebService service)
         {
             this.service = service;
         }
@@ -21,7 +23,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost("send")]
-        public IActionResult Send(MessageToSend message)
+        public IActionResult Send([FromForm] MessageToSend message)
         {
             service.SendMessage(message);
             return RedirectToAction("Index", new RequestMessages() { ChannelId = message.ChannelId, ChannelSecret = message.ChannelSecret });
@@ -46,7 +48,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(LoginRequest loginRequest)
+        public IActionResult Login([FromForm] LoginRequest loginRequest)
         {
             service.Login(loginRequest);
             return RedirectToAction(nameof(Index));
@@ -66,7 +68,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost("CreateChannel")]
-        public IActionResult CreateChannel (NewChannelRequest request)
+        public IActionResult CreateChannel([FromForm] NewChannelRequest request)
         {
             service.CreateChannel(request);
             return RedirectToAction(nameof(GetChannels));

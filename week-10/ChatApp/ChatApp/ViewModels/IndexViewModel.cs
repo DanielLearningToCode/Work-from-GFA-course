@@ -1,7 +1,7 @@
-﻿using ChatApp.Models;
+﻿using ChatApp.DTO;
+using ChatApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ChatApp.ViewModels
 {
