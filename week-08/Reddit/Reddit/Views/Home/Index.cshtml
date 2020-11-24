@@ -1,5 +1,5 @@
 ﻿@model Reddit.Models.IndexViewModel
-@{string sortType = Model.SortByDate ? "date" : "votes";
+@{string sortType = Model.SortBy == "date" ? "date" : "votes";
     string select = "selected";
     int[] choices = { 5, 10, 15 };
 }
@@ -10,6 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/StyleSheet.css" rel="stylesheet" />
     <title>Reddit</title>
 </head>
 <body>
@@ -17,12 +18,14 @@
         @Html.ActionLink("Submit New", "SubmitNew", "Home", null, new { @class = "badge badge-pill badge-dark" })
 
         <h1>Trending posts</h1>
-        <p>
-            You are on page: @(Model.CurrentPage + 1), Sorted by: @sortType Post per page: @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        <div class="info">
+            You are on page: @(Model.CurrentPage + 1), Sorted by: @sortType
+            Posts per page: @using (Html.BeginForm("Index", "Home", FormMethod.Get))
             {
                 <div class="form-group">
                     <input type="hidden" name="page" value="@Model.CurrentPage" />
-                    <input type="hidden" name="sortByDate" value="@Model.SortByDate" />
+                    <input type="hidden" name="sortBy" value="@Model.SortBy" />
+                    <input type="hidden" name="author" value="@Model.FilteredAuthor" />
                     <select id="postsPerPage" value="@Model.PostsPerPage" name="postsPerPage">
                         @foreach (int choice in choices)
                         {
@@ -38,20 +41,28 @@
                     </select>
                     <input type="submit" value="display" class="btn btn-light" />
                 </div>
-            }</ p >
-            <span>@Html.ActionLink("Sort by date", "Index", "Home", new { page = Model.CurrentPage, sortByDate = true, postsPerPage = Model.PostsPerPage }, new { @class = "badge badge-pill badge-dark" })</span>
-            <span>@Html.ActionLink("Sort by votes", "Index", "Home", new { page = Model.CurrentPage, sortByDate = false, postsPerPage = Model.PostsPerPage }, new { @class = "badge badge-pill badge-dark" })</span>
+            }
+        </div>
+            <span>@Html.ActionLink("Sort by date", "Index", "Home", new { page = Model.CurrentPage, sortBy = "date", postsPerPage = Model.PostsPerPage, author = Model.FilteredAuthor }, new { @class = "badge badge-pill badge-dark" })</span>
+            <span>@Html.ActionLink("Sort by votes", "Index", "Home", new { page = Model.CurrentPage, sortBy = "votes", postsPerPage = Model.PostsPerPage, author = Model.FilteredAuthor }, new { @class = "badge badge-pill badge-dark" })</span>
             <span>
                 @using (Html.BeginForm("FilterByUser", "Home", FormMethod.Post))
                 {
                     <input type="hidden" name="page" value="@Model.CurrentPage" />
-                    <input type="hidden" name="sortByDate" value="@Model.SortByDate" />
+                    <input type="hidden" name="sortBy" value="@Model.SortBy" />
                     <input type="hidden" id="postsPerPage" value="@Model.PostsPerPage" name="postsPerPage" />
                     <label for="author">Filter by author</label>
                     <select id="author" name="author">
                         @foreach (var author in Model.Names)
                         {
-                            <option value="@author">@author</option>
+                            @if (author == Model.FilteredAuthor)
+                            {
+                                <option value="@author" selected="@select">@author</option>
+                            }
+                            else
+                            {
+                                <option value="@author">@author</option>
+                            }
                         }
                     </select>
                     <input type="submit" value="Filter" />
@@ -81,10 +92,10 @@
             {
                 <div class="row">
                     <div class="col">
-                        <span class="vote-btn">@Html.ActionLink(" + ", "UpVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage }, new { @class = "badge badge-success" })</span>
+                        <span class="vote-btn">@Html.ActionLink(" + ", "UpVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortBy = Model.SortBy, postsPerPage = Model.PostsPerPage, author = Model.FilteredAuthor }, new { @class = "badge badge-success" })</span>
                     </div>
                     <div class="col">
-                        <span class="vote-btn">@Html.ActionLink(" - ", "DownVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage }, new { @class = "badge badge-warning" })</span>
+                        <span class="vote-btn">@Html.ActionLink(" - ", "DownVote", "Home", new { id = post.Id, page = Model.CurrentPage, sortBy = Model.SortBy, postsPerPage = Model.PostsPerPage, author = Model.FilteredAuthor }, new { @class = "badge badge-warning" })</span>
                     </div>
                     <div class="col">
                         <span class="votes">@post.Votes</span>
@@ -104,7 +115,7 @@
 <p>Page: </p>
         @for (int i = 0; i < Model.PageCount; i++)
         {
-            @Html.ActionLink(Convert.ToString(i + 1) + "  ", "Index", "Home", new { page = i, sortByDate = Model.SortByDate, postsPerPage = Model.PostsPerPage })
+            @Html.ActionLink(Convert.ToString(i + 1) + "  ", "Index", "Home", new { page = i, sortBy = Model.SortBy, postsPerPage = Model.PostsPerPage, author = Model.FilteredAuthor })
         }
     </div>
 </body>

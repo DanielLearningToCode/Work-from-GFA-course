@@ -11,13 +11,14 @@ namespace Reddit.Models
         public ICollection<Post> Posts { get; set; }
         public int PageCount { get; set; }
         public int CurrentPage { get; set; }
-        public bool SortByDate { get; set; }
-        public ICollection<string> Names { get; set; }
+        public string SortBy { get; set; }
+        public List<string> Names { get; set; }
         public int PostsPerPage { get; set; }
+        public string FilteredAuthor { get; set; }
         public IndexViewModel()
         {
             Posts = new List<Post>();
-            Names = new List<string>();
+            Names = new List<string>() { "-" };
         }
     }
 }

@@ -10,73 +10,61 @@ namespace Reddit.Services
     public class PostService
     {
         private ApplicationDBContext db;
-     
-        public delegate List<Post> SortingDelegate();
-       // public SortingDelegate GetSortedPosts;
+
+        public delegate IQueryable<Post> SortingDelegate(IQueryable<Post> posts);
         public PostService(ApplicationDBContext db)
         {
             this.db = db;
         }
 
-        public SortingDelegate SelectSorting(bool sortByDate)
+        public SortingDelegate SelectSorting(string sortBy)
         {
-            /*    if (sortByDate)
-                {
-                    return GetSortedPosts = SortByDate;
-                }
-                 return GetSortedPosts = SortByVotes;
-            */
-            return sortByDate ? new SortingDelegate(SortByDate) : new SortingDelegate(SortByVotes);
-                
+            return sortBy == "date" ? new SortingDelegate(SortByDate) : new SortingDelegate(SortByVotes);
         }
 
-        public List<Post> SortByDate()
+        public IOrderedQueryable<Post> SortByDate(IQueryable<Post> posts)
         {
-            var sortedPosts = GetPosts().OrderByDescending(p => p.CreatedDate).ToList();
-            return sortedPosts;
-        }
-        public List<Post> SortByVotes()
-        {
-            var sortedPosts = GetPosts().OrderByDescending(p => p.Votes).ToList();
-            return sortedPosts;
+            return posts.OrderBy(p => p.CreatedDate);            
         }
 
-        public List<Post> GetPosts()
+        public IOrderedQueryable<Post> SortByVotes(IQueryable<Post> posts)
         {
-            List<Post> result = db.Posts.Include(p => p.User).ToList();
-            return result;
+            return posts.OrderByDescending(p => p.Votes);
         }
-/*        public List<Post> GetSortedPosts()
-        {
-            var sortedPosts = GetPosts().OrderByDescending(p => p.Votes).ToList();
-            return sortedPosts;
-        }*/
 
-        public List<Post> GetNextPosts(int page, out int pageCount, bool sortByDate, int postsPerPage)
+        public IQueryable<Post> GetPosts(string author)
         {
-            List<Post> result = new List<Post>();
-            //GetSortedPosts = SelectSorting(sortByDate);
-            List<Post> posts = SelectSorting(sortByDate)();
-            int postCount = posts.Count;
-            
-            int remainingPosts = postCount - page * postsPerPage;
+            return author == "-" ? db.Posts.Include(p => p.User) :
+                db.Posts.Include(p => p.User).Where(p => p.User.Name == author);
+        }
+
+        public List<Post> GetNextPosts(ref int page, out int pageCount, string sortBy, int postsPerPage, string author)
+        {
+            var posts = SelectSorting(sortBy)(GetPosts(author));  // selects sorting delegate based on sort type and calls the method referenced by the delegate        
+            int postCount = posts.Count();
+            //pagination
+            page = (postCount / postsPerPage) == 0 ? 0 : page;
+            int remainingPosts = postCount - page * postsPerPage;  
             pageCount = postCount % postsPerPage > 0 ? ((postCount / postsPerPage) + 1) : (postCount / postsPerPage);
             int skip = page * postsPerPage;
             int take = remainingPosts < postsPerPage ? remainingPosts : postsPerPage;
-            result = posts.Skip(skip).Take(take).ToList();
-            return result;
+            return posts.Skip(skip).Take(take).ToList();
         }
-
-        internal void FilterByUser(string author)
+       
+        public IndexViewModel CreateViewModel(int page, string sortBy, int postsPerPage, string author = "-")
         {
-            throw new NotImplementedException();
-        }
-
-        public IndexViewModel CreateViewModel(int page, bool sortByDate, int postsPerPage)
-        {
-            List<Post> posts = GetNextPosts(page, out int pageCount, sortByDate, postsPerPage);
+            List<Post> posts = GetNextPosts(ref page, out int pageCount, sortBy, postsPerPage, author);
             List<string> names = db.Users.Select(u => u.Name).ToList();
-            IndexViewModel model = new IndexViewModel() { Posts = posts, PageCount = pageCount, CurrentPage = page, SortByDate = sortByDate, Names = names, PostsPerPage = postsPerPage};
+            IndexViewModel model = new IndexViewModel()
+            {
+                Posts = posts,
+                PageCount = pageCount,
+                CurrentPage = page,
+                SortBy = sortBy,
+                PostsPerPage = postsPerPage,
+                FilteredAuthor = author
+            };
+            model.Names.AddRange(names);
             return model;
         }
 

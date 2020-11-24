@@ -28,11 +28,7 @@ namespace Reddit.Models
         public DateTime CreatedDate { get; set; }
         public User User { get; set; }
         [ForeignKey("UserId")]
-      //  [DefaultValue(1)]  - not working
         public int UserId { get; set; }
-        public Post()
-        {
-            // time = DateTime.Now;
-        }
+
     }
 }

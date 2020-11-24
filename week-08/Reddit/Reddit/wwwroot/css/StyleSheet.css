@@ -1,0 +1,7 @@
+﻿body {
+}
+
+.info {
+    display:inline-flex;
+    justify-content:flex-start;
+}
